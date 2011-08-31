@@ -53,6 +53,8 @@ h2. Author
 Stephen Sykes
 Twitter: @sdsykes
 
+Credit to LaC, see "stack overflow":http://stackoverflow.com/questions/6768684/osx-lion-applescript-how-to-get-current-space-from-mission-control/6967631#6967631 for the space id and part of the move space code.
+
 h2. Licence
 
 (c) Stephen Sykes 2011
