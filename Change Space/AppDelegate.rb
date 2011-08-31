@@ -188,8 +188,8 @@ class AppDelegate
   end
   
   def remap_desktops
-    map = {}
-    1.upto($total_spaces) do |n|
+    map = {1=>1}
+    2.upto($total_spaces) do |n|
       move_to(n)
       sleep 1
       space_id = $c_bridge.get_space_id
