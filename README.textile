@@ -8,11 +8,13 @@ In OSX Lion Apple dispensed with the simple and effective 2D spaces grids many p
 
 In its place, there is the more dynamic concept of 'Desktops', which can be created by the system on the fly, for instance when running a full screen app. Also, the system can re-order the desktops according to your use.
 
-These features are of little use to power users, who know where their apps and windows are, and like to navigate fast between them. A common layout is a 3x3 grid - then from the central space you can reach 4 others with just one keypress. Very useful for flicking between your code editor, and the browser, and perhaps mail, or iTunes for instance.
+These dynamic features are of little use to power users, who know where their apps and windows are, and like to navigate fast between them. A common layout is a 3x3 grid - then from the central space you can reach 4 others with just one keypress. Very useful for flicking between your code editor, and the browser, and perhaps mail, or iTunes for instance.
 
 h2. The solution
 
-In Lion you can turn off the feature 'Automatically rearrange spaces based on the most recent use' in the Mission Control system preferences pane, and I recommend this. You can also make sure you have the right number of spaces (e.g. 9) by adding desktops using the left hand side + button when in Mission Control.
+To solve the problem, we must check a few settings, configure the correct number of desktops for a grid, and install this app which maps 4 directional hotkeys to move to the correct desktop as if there really were a grid.
+
+In Lion you can turn off the feature 'Automatically rearrange spaces based on the most recent use' in the Mission Control system preferences pane, and I recommend this. You must also make sure you have the right number of spaces (e.g. 9) by adding desktops using the left hand side + button when in Mission Control.
 
 With 9 desktops set up and fixed, you can then assign your applications to them by dragging them to the right desktop and right clicking on the icon in the task bar, and choosing Options->Assign to this desktop.
 
@@ -24,23 +26,27 @@ It is not entirely easy, because Mission Control is not scriptable. However, the
 
 h2. Installation
 
-Download the app, and drag it into your Applications folder.  Then launch it as usual. If it works for you, you can safely add it to your launch items.
+Download the app, and drag it into your Applications folder.  Then launch it as you would any app. 
+Make sure you set your preferred layout first (see below about preferences), then if it works for you, you can safely add it to your login items.
 
 "Change Space.app version 1.2":http://stephensykes.com/OSX/Change%20Space.app.tar.gz
 
 h2. Usage
 
-Change Space has a preferences window, and here you should set the kind of grid you use. (2x2, 3x2, 4x2, or 3x3)
+Change Space has a preferences window (command-,), and here you should select the kind of grid you use. (2x2, 3x2, 4x2, or 3x3)
+3x3 is the default, but if you use another setting you must of course have the correct total number of desktops set up.
 
-The keys to change spaces are ctrl-shift arrow keys.
+The keys to change spaces are ctrl-shift arrow keys. These are preset, but this may be configurable in a later version.
 
 When you first change space, the program will run through all your desktops so it can identify them all.
 
 h2. Known issues
 
-Change Space cannot change to desktop 1 without sending ctrl-1 to the system. Unfortunately this doesn't when if you are holding the shift key down at the time. So sometimes if you do not release the shift key in time this does not work.
+Change Space cannot change to desktop 1 without sending ctrl-1 to the system. Unfortunately this doesn't work when if you are holding the shift key down at the time. So sometimes if you do not release the shift key quickly this does not work. This only affects desktop 1, I recommend you seldom use this one for this reason until we work out a solution. (I rejected using just control and the arrow keys because that is used in many other apps.)
 
-The timing of the dissappearance of the space number in the status bar should be fixed to be 2.5 seconds after the most recent desktop change.
+The timing of the disappearance of the space number in the status bar should be fixed to be 2.5 seconds after the most recent desktop change.
+
+I have seen the mapping getting mixed up, and it cycling through the desktops on every space change. If this happens, try deleting ~/Library/Caches/space_map and try it again. Also restarting the app may help (at least it did for me). At any rate, please report issues like this in github issues.
 
 h2. Author
 
