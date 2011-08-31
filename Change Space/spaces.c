@@ -1,0 +1,43 @@
+//
+//  spaces.c
+//  Change Space
+//
+//  Created by Stephen Sykes on 30/8/11.
+//  Copyright (c) 2011 Switchstep. All rights reserved.
+//
+//  Derived from https://gist.github.com/1129406
+
+#include <unistd.h>
+#include <CoreServices/CoreServices.h>
+#include <ApplicationServices/ApplicationServices.h>
+
+#include "spaces.h"
+
+typedef int CGSConnection;
+extern OSStatus CGSGetWorkspace(const CGSConnection cid, int *workspace);
+extern OSStatus CGSSetWorkspace(const CGSConnection cid, int workspace);
+extern CGSConnection _CGSDefaultConnection(void);
+
+int get_space_id(void)
+{
+  int space;
+  CFArrayRef windows = CGWindowListCopyWindowInfo( kCGWindowListOptionOnScreenOnly, kCGNullWindowID );
+  CFIndex i, n;
+  
+  for (i = 0, n = CFArrayGetCount(windows); i < n; i++) {
+    CFDictionaryRef windict = CFArrayGetValueAtIndex(windows, i);
+    CFNumberRef spacenum = CFDictionaryGetValue(windict, kCGWindowWorkspace);
+    if (spacenum) {
+      CFNumberGetValue(spacenum,  kCFNumberIntType, &space);
+      return space;
+    }
+  }
+  return -1;
+}
+
+void set_space_by_index(int space)
+{
+  CFNotificationCenterRef nc = CFNotificationCenterGetDistributedCenter();
+  CFStringRef numstr = CFStringCreateWithFormat(NULL, nil, CFSTR("%d"), space);
+  CFNotificationCenterPostNotification(nc, CFSTR("com.apple.switchSpaces"), numstr, NULL, TRUE);
+}
