@@ -19,7 +19,7 @@ framework 'Foundation'
 framework 'ScriptingBridge'
 
 class AppDelegate
-  attr_accessor :window
+  attr_accessor :window, :preferences
   
   def applicationDidFinishLaunching(a_notification)
     $res_path = NSBundle.mainBundle.resourcePath.fileSystemRepresentation + '/'
@@ -30,12 +30,9 @@ class AppDelegate
 
     defaults = NSUserDefaultsController.sharedUserDefaultsController
     layout = defaults.values.valueForKey("gridLayout")
-    if !layout
-      defaults.values.send(:"setValue:forKey:", 4, "gridLayout")
-      layout = 4
-    end
-    $width, $height = [[2,2], [3,2], [4,2], [3,3]][layout - 1]
-    $total_spaces = $width * $height
+    first_time = !layout
+
+    setup_layout
     
     initStatusBar(setupMenu)
     
@@ -50,6 +47,21 @@ class AppDelegate
     ddh.send(method, kVK_RightArrow, NSControlKeyMask | NSShiftKeyMask, self, :"goRightKey:", nil)
     ddh.send(method, kVK_UpArrow, NSControlKeyMask | NSShiftKeyMask, self, :"goUpKey:", nil)
     ddh.send(method, kVK_DownArrow, NSControlKeyMask | NSShiftKeyMask, self, :"goDownKey:", nil)
+    
+    if first_time
+      preferences.makeKeyAndOrderFront(self)
+    end
+  end
+  
+  def setup_layout
+    defaults = NSUserDefaultsController.sharedUserDefaultsController
+    layout = defaults.values.valueForKey("gridLayout")
+    if !layout
+      defaults.values.send(:"setValue:forKey:", 4, "gridLayout")
+      layout = 4
+    end
+    $width, $height = [[2,2], [3,2], [4,2], [3,3]][layout - 1]
+    $total_spaces = $width * $height
   end
   
   def setupMenu
@@ -136,11 +148,12 @@ class AppDelegate
   end
 
   def go(direction)
-    puts "Going #{direction}"
+    # puts "Going #{direction}"
+    setup_layout
     
     current = current_space
     space_number = current
-    puts "Current space is #{space_number}"
+    # puts "Current space is #{space_number}"
     
     return unless space_number
     
@@ -160,7 +173,7 @@ class AppDelegate
     end
 
     if space_number != current
-      puts "Moving to #{space_number}"
+      # puts "Moving to #{space_number}"
       move_to(space_number)
     end
   end
@@ -168,7 +181,7 @@ class AppDelegate
   def current_space
     #    current_space = %x{'#{$res_path}/spaces'}.strip
     current_space = $c_bridge.get_space_id
-    puts "Current space id is #{current_space}"
+    # puts "Current space id is #{current_space}"
     space_map_file = "#{$cache_path}/space_map"
     if File.exist? space_map_file
       space_map = Marshal.load(File.read(space_map_file))

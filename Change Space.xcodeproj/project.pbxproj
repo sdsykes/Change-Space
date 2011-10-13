@@ -54,7 +54,6 @@
 		3AAC3122140D3C2A000361AA /* menu_icon_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon_9.png; sourceTree = "<group>"; };
 		3ACFE9A9140C101E00BAE55C /* Change Space.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Change Space.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ACFE9AD140C101E00BAE55C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		3ACFE9AF140C101E00BAE55C /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = Library/Frameworks/MacRuby.framework; sourceTree = DEVELOPER_DIR; };
 		3ACFE9B4140C101E00BAE55C /* Change Space-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Change Space-Info.plist"; sourceTree = "<group>"; };
 		3ACFE9B6140C101E00BAE55C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3ACFE9B8140C101E00BAE55C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -82,8 +81,6 @@
 		3ACFE99E140C101E00BAE55C = {
 			isa = PBXGroup;
 			children = (
-				3AAC310A140CF45F000361AA /* Carbon.framework */,
-				3ACFE9CC140C118F00BAE55C /* MacRuby.framework */,
 				3ACFE9B2140C101E00BAE55C /* Change Space */,
 				3ACFE9AC140C101E00BAE55C /* Frameworks */,
 				3ACFE9AA140C101E00BAE55C /* Products */,
@@ -101,8 +98,9 @@
 		3ACFE9AC140C101E00BAE55C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3AAC310A140CF45F000361AA /* Carbon.framework */,
+				3ACFE9CC140C118F00BAE55C /* MacRuby.framework */,
 				3ACFE9AD140C101E00BAE55C /* Cocoa.framework */,
-				3ACFE9AF140C101E00BAE55C /* MacRuby.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -309,6 +307,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -328,6 +327,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
