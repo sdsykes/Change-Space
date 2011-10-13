@@ -29,7 +29,7 @@ h2. Installation
 Download the app, and drag it into your Applications folder.  Then launch it as you would any app. 
 Make sure you set your preferred layout first (see below about preferences), then if it works for you, you can safely add it to your login items.
 
-"Change Space.app version 1.2":http://stephensykes.com/OSX/Change%20Space.app.tar.gz
+"Change Space.app version 1.3.0":http://stephensykes.com/OSX/Change%20Space.app.zip
 
 h2. Usage
 
