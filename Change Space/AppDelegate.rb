@@ -19,7 +19,7 @@ framework 'Foundation'
 framework 'ScriptingBridge'
 
 class AppDelegate
-  attr_accessor :window, :preferences
+  attr_accessor :window, :preferences, :suupdater
   
   def applicationDidFinishLaunching(a_notification)
     $res_path = NSBundle.mainBundle.resourcePath.fileSystemRepresentation + '/'
@@ -72,6 +72,11 @@ class AppDelegate
     menu.addItem(menu_item("Right"))
     menu.addItem(menu_item("Up"))
     menu.addItem(menu_item("Down"))
+    menu.addItem(NSMenuItem.separatorItem)
+    menu.addItem(update_menu_item)
+    menu.addItem(NSMenuItem.separatorItem)
+    menu.addItem(preferences_menu_item)
+    menu.addItem(NSMenuItem.separatorItem)
     
     mi = NSMenuItem.new
     mi.title = 'Quit'
@@ -87,6 +92,7 @@ class AppDelegate
     mi.title = "Go #{direction}"
     mi.action = "go#{direction}:"
     mi.target = self
+    # key bindings here did not work well
     # mi.setKeyEquivalentModifierMask(NSShiftKeyMask | NSCommandKeyMask);
     # arrow = Pointer.new("S")
     # directions = {"Left" => NSLeftArrowFunctionKey,
@@ -96,6 +102,22 @@ class AppDelegate
     # arrow[0] = directions[direction]
     # s = NSString.send(:"stringWithCharacters:length:", arrow, 1)
     # mi.setKeyEquivalent(s)
+    mi
+  end
+  
+  def update_menu_item
+    mi = NSMenuItem.new
+    mi.title = "Check for updates"
+    mi.action = "checkForUpdates:"
+    mi.target = suupdater
+    mi
+  end
+
+  def preferences_menu_item
+    mi = NSMenuItem.new
+    mi.title = "Preferences"
+    mi.action = "makeKeyAndOrderFront:"
+    mi.target = preferences
     mi
   end
   

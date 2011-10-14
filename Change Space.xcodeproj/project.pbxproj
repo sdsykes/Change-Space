@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A3DEA6E144832410038422B /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3A3DEA6D144832410038422B /* dsa_pub.pem */; };
+		3A81252614482DAD005C82E4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A81252514482DAD005C82E4 /* Sparkle.framework */; };
+		3A81252714482E18005C82E4 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A81252514482DAD005C82E4 /* Sparkle.framework */; };
 		3AAC3100140CD2CC000361AA /* menu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AAC30FF140CD2CC000361AA /* menu_icon.png */; };
 		3AAC3103140CD9B7000361AA /* menu_icon_alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AAC3102140CD9B7000361AA /* menu_icon_alt.png */; };
 		3AAC3109140CF418000361AA /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAC3107140CF418000361AA /* DDHotKeyCenter.m */; };
@@ -32,7 +35,22 @@
 		3ACFE9CD140C118F00BAE55C /* MacRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ACFE9CC140C118F00BAE55C /* MacRuby.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		3A81252314482630005C82E4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3A81252714482E18005C82E4 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		3A3DEA6D144832410038422B /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		3A81252514482DAD005C82E4 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		3AAC30FF140CD2CC000361AA /* menu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon.png; sourceTree = "<group>"; };
 		3AAC3102140CD9B7000361AA /* menu_icon_alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon_alt.png; sourceTree = "<group>"; };
 		3AAC3106140CF418000361AA /* DDHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyCenter.h; sourceTree = "<group>"; };
@@ -72,6 +90,7 @@
 				3AAC310B140CF45F000361AA /* Carbon.framework in Frameworks */,
 				3ACFE9CD140C118F00BAE55C /* MacRuby.framework in Frameworks */,
 				3ACFE9AE140C101E00BAE55C /* Cocoa.framework in Frameworks */,
+				3A81252614482DAD005C82E4 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +117,7 @@
 		3ACFE9AC140C101E00BAE55C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A81252514482DAD005C82E4 /* Sparkle.framework */,
 				3AAC310A140CF45F000361AA /* Carbon.framework */,
 				3ACFE9CC140C118F00BAE55C /* MacRuby.framework */,
 				3ACFE9AD140C101E00BAE55C /* Cocoa.framework */,
@@ -149,6 +169,7 @@
 				3AAC3102140CD9B7000361AA /* menu_icon_alt.png */,
 				3AAC30FF140CD2CC000361AA /* menu_icon.png */,
 				3ACFE9BC140C101E00BAE55C /* MainMenu.xib */,
+				3A3DEA6D144832410038422B /* dsa_pub.pem */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -187,6 +208,7 @@
 				3ACFE9A5140C101E00BAE55C /* Sources */,
 				3ACFE9A6140C101E00BAE55C /* Frameworks */,
 				3ACFE9A7140C101E00BAE55C /* Resources */,
+				3A81252314482630005C82E4 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -245,6 +267,7 @@
 				3AAC3127140D3C2A000361AA /* menu_icon_7.png in Resources */,
 				3AAC3128140D3C2A000361AA /* menu_icon_8.png in Resources */,
 				3AAC3129140D3C2A000361AA /* menu_icon_9.png in Resources */,
+				3A3DEA6E144832410038422B /* dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,7 +322,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -320,7 +343,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -337,6 +360,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -353,6 +377,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
