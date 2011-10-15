@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string></string>
+	<string>1.4.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSHumanReadableCopyright</key>
@@ -32,5 +32,9 @@
 	<string>NSApplication</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
+	<key>SUFeedURL</key>
+	<string>https://raw.github.com/sdsykes/Change-Space/master/appcast.xml</string>
+	<key>LSUIElement</key>
+	<true/>
 </dict>
 </plist>
