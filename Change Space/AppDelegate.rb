@@ -113,11 +113,16 @@ class AppDelegate
     mi
   end
 
+  def activate_preferences(sender)
+    NSApp.activateIgnoringOtherApps(true);
+    preferences.makeKeyAndOrderFront(self)
+  end
+  
   def preferences_menu_item
     mi = NSMenuItem.new
     mi.title = "Preferences"
-    mi.action = "makeKeyAndOrderFront:"
-    mi.target = preferences
+    mi.action = "activate_preferences:"
+    mi.target = self
     mi
   end
   
