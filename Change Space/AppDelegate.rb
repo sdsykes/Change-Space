@@ -3,7 +3,7 @@
 #  Change Space
 #
 #  Created by Stephen Sykes on 29/8/11.
-#  Copyright 2011 Switchstep. All rights reserved.
+#  Copyright 2011 Stephen Sykes. All rights reserved.
 #
 
 # Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is 
@@ -20,6 +20,7 @@ framework 'ScriptingBridge'
 
 class AppDelegate
   attr_accessor :window, :preferences, :suupdater
+  attr_accessor :gridColumns, :gridRows, :circulateVertical, :desktopCount
   
   def applicationDidFinishLaunching(a_notification)
     $res_path = NSBundle.mainBundle.resourcePath.fileSystemRepresentation + '/'
@@ -28,11 +29,14 @@ class AppDelegate
     
     $c_bridge = SpacesCBridge.new
 
-    defaults = NSUserDefaultsController.sharedUserDefaultsController
-    layout = defaults.values.valueForKey("gridLayout")
-    first_time = !layout
+    default_file = $res_path + "defaults.plist"
+    default_settings = NSDictionary.dictionaryWithContentsOfFile(default_file)
+    NSUserDefaults.standardUserDefaults.registerDefaults(default_settings)
 
-    setup_layout
+    defaults = NSUserDefaultsController.sharedUserDefaultsController
+    before = defaults.values.valueForKey("hasLaunchedBefore")
+    first_time = !before
+    defaults.values.setValue(true, forKey: "hasLaunchedBefore")
     
     initStatusBar(setupMenu)
     
@@ -42,26 +46,25 @@ class AppDelegate
     kVK_UpArrow = 0x7E
 
     ddh = DDHotKeyCenter.new
-    method = :"registerHotKeyWithKeyCode:modifierFlags:target:action:object:"
-    ddh.send(method, kVK_LeftArrow, NSControlKeyMask | NSShiftKeyMask, self, :"goLeftKey:", nil)
-    ddh.send(method, kVK_RightArrow, NSControlKeyMask | NSShiftKeyMask, self, :"goRightKey:", nil)
-    ddh.send(method, kVK_UpArrow, NSControlKeyMask | NSShiftKeyMask, self, :"goUpKey:", nil)
-    ddh.send(method, kVK_DownArrow, NSControlKeyMask | NSShiftKeyMask, self, :"goDownKey:", nil)
+    flags =  NSControlKeyMask | NSShiftKeyMask
+    ddh.registerHotKeyWithKeyCode(kVK_LeftArrow, modifierFlags: flags, target: self, action: "goLeftKey:", object: nil)
+    ddh.registerHotKeyWithKeyCode(kVK_RightArrow, modifierFlags: flags, target: self, action: "goRightKey:", object: nil)
+    ddh.registerHotKeyWithKeyCode(kVK_UpArrow, modifierFlags: flags, target: self, action: "goUpKey:", object: nil)
+    ddh.registerHotKeyWithKeyCode(kVK_DownArrow, modifierFlags: flags, target: self, action: "goDownKey:", object: nil)
     
     if first_time
-      preferences.makeKeyAndOrderFront(self)
+      activate_preferences(self)
     end
   end
   
-  def setup_layout
-    defaults = NSUserDefaultsController.sharedUserDefaultsController
-    layout = defaults.values.valueForKey("gridLayout")
-    if !layout
-      defaults.values.send(:"setValue:forKey:", 4, "gridLayout")
-      layout = 4
-    end
-    $width, $height = [[2,2], [3,2], [4,2], [3,3]][layout - 1]
-    $total_spaces = $width * $height
+  def update_layout
+    @width, @height = gridColumns.selectedItem.title.to_i, gridRows.selectedItem.title.to_i
+    @total_spaces = @width * @height
+    desktopCount.setStringValue @total_spaces.to_s
+  end
+  
+  def update_grid(sender)
+    update_layout
   end
   
   def setupMenu
@@ -77,13 +80,7 @@ class AppDelegate
     menu.addItem(NSMenuItem.separatorItem)
     menu.addItem(preferences_menu_item)
     menu.addItem(NSMenuItem.separatorItem)
-    
-    mi = NSMenuItem.new
-    mi.title = 'Quit'
-    mi.action = 'quit:'
-    mi.target = self
-    menu.addItem mi
-    
+    menu.addItem(quit_menu_item)
     menu
   end
 
@@ -114,6 +111,12 @@ class AppDelegate
   end
 
   def activate_preferences(sender)
+    defaults = NSUserDefaultsController.sharedUserDefaultsController
+    gridRows.selectItemAtIndex(defaults.values.valueForKey("gridRows"))
+    gridColumns.selectItemAtIndex(defaults.values.valueForKey("gridColumns"))
+    
+    update_layout
+    
     NSApp.activateIgnoringOtherApps(true);
     preferences.makeKeyAndOrderFront(self)
   end
@@ -122,6 +125,14 @@ class AppDelegate
     mi = NSMenuItem.new
     mi.title = "Preferences"
     mi.action = "activate_preferences:"
+    mi.target = self
+    mi
+  end
+  
+  def quit_menu_item
+    mi = NSMenuItem.new
+    mi.title = 'Quit'
+    mi.action = 'quit:'
     mi.target = self
     mi
   end
@@ -175,8 +186,7 @@ class AppDelegate
   end
 
   def go(direction)
-    # puts "Going #{direction}"
-    setup_layout
+    update_layout
     
     current = current_space
     space_number = current
@@ -186,17 +196,17 @@ class AppDelegate
     
     case direction
     when "up"
-      space_number -= $width
+      space_number -= @width
       space_number = current if space_number < 1
     when "down"
-      space_number += $width
-      space_number = current if space_number > ($total_spaces)
+      space_number += @width
+      space_number = current if space_number > (@total_spaces)
     when "left"
       space_number -= 1
-      space_number += ($total_spaces) if space_number < 1
+      space_number += (@total_spaces) if space_number < 1
     when "right"
       space_number += 1
-      space_number -= ($total_spaces) if space_number > ($total_spaces)
+      space_number -= (@total_spaces) if space_number > (@total_spaces)
     end
 
     if space_number != current
@@ -206,7 +216,6 @@ class AppDelegate
   end
   
   def current_space
-    #    current_space = %x{'#{$res_path}/spaces'}.strip
     current_space = $c_bridge.get_space_id
     # puts "Current space id is #{current_space}"
     space_map_file = "#{$cache_path}/space_map"
@@ -229,7 +238,7 @@ class AppDelegate
   
   def remap_desktops
     map = {1=>1}
-    2.upto($total_spaces) do |n|
+    2.upto(@total_spaces) do |n|
       move_to(n)
       sleep 1
       space_id = $c_bridge.get_space_id
@@ -247,10 +256,8 @@ class AppDelegate
     if space_number < 2
       system = SBApplication.applicationWithBundleIdentifier("com.apple.SystemEvents")
       system.send(:"keystroke:using:", space_number.to_s, four_char_code('Kctl'))
-      #      %x{arch -i386 osascript '#{$res_path}/space.scpt' #{space_number}}
     else
       space_index = space_number - 1
-      #      %x{'#{$res_path}/spaces' #{space_index}}
       $c_bridge.set_space_by_index(space_index)
     end
     

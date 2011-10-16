@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A02BA10144B431000993629 /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A02BA0F144B431000993629 /* defaults.plist */; };
 		3A3DEA6E144832410038422B /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3A3DEA6D144832410038422B /* dsa_pub.pem */; };
 		3A81252614482DAD005C82E4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A81252514482DAD005C82E4 /* Sparkle.framework */; };
 		3A81252714482E18005C82E4 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3A81252514482DAD005C82E4 /* Sparkle.framework */; };
@@ -49,6 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A02BA0F144B431000993629 /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
 		3A3DEA6D144832410038422B /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		3A81252514482DAD005C82E4 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		3AAC30FF140CD2CC000361AA /* menu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon.png; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				3AAC30FF140CD2CC000361AA /* menu_icon.png */,
 				3ACFE9BC140C101E00BAE55C /* MainMenu.xib */,
 				3A3DEA6D144832410038422B /* dsa_pub.pem */,
+				3A02BA0F144B431000993629 /* defaults.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				3AAC3128140D3C2A000361AA /* menu_icon_8.png in Resources */,
 				3AAC3129140D3C2A000361AA /* menu_icon_9.png in Resources */,
 				3A3DEA6E144832410038422B /* dsa_pub.pem in Resources */,
+				3A02BA10144B431000993629 /* defaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
