@@ -185,6 +185,11 @@ class AppDelegate
     go("down")
   end
 
+  def circulate_v
+    defaults = NSUserDefaultsController.sharedUserDefaultsController
+    defaults.values.valueForKey("circulateVertical")
+  end
+  
   def go(direction)
     update_layout
     
@@ -197,10 +202,22 @@ class AppDelegate
     case direction
     when "up"
       space_number -= @width
-      space_number = current if space_number < 1
+      if space_number < 1
+        if circulate_v
+          space_number += @total_spaces
+        else
+          space_number = current
+        end
+      end
     when "down"
       space_number += @width
-      space_number = current if space_number > (@total_spaces)
+      if space_number > @total_spaces
+        if circulate_v
+          space_number -= @total_spaces
+        else
+          space_number = current
+        end
+      end
     when "left"
       space_number -= 1
       space_number += (@total_spaces) if space_number < 1
