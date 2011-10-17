@@ -57,7 +57,7 @@ Credit to LaC, see "stack overflow":http://stackoverflow.com/questions/6768684/o
 
 h2. Donations
 
-!http://www.pledgie.com/campaigns/16132.png?skin_name=chrome(Click here to donate)!:http://www.pledgie.com/campaigns/16132
+!http://pledgie.com/campaigns/16132.png?skin_name=chrome(Click here to donate)!:http://www.pledgie.com/campaigns/16132
 
 h2. Licence
 
