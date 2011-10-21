@@ -18,10 +18,10 @@
         <item>
            <title>Version 2.0.0 (New major version)</title>
            <sparkle:releaseNotesLink>
-            https://github.com/sdsykes/Change-Space
+            https://raw.github.com/sdsykes/Change-Space/master/release_notes_2.0.0.html
            </sparkle:releaseNotesLink>
            <pubDate>Wed, 21 Oct 2011 19:00:00 +0300</pubDate>
-           <enclosure url="https://github.com/downloads/sdsykes/Change-Space/Change%20Space_2.0.0.app.zip" sparkle:version="2.0.0" length="560142" type="application/octet-stream" sparkle:dsaSignature="MCwCFGSasuej5GEhehjaCmpLRuBE38UHAhQgkzppSJKHwssrWYi+e+6MRpkd6w==" />
+           <enclosure url="http://cloud.github.com/downloads/sdsykes/Change-Space/Change%20Space_2.0.0.app.zip" sparkle:version="2.0.0" length="560142" type="application/octet-stream" sparkle:dsaSignature="MCwCFGSasuej5GEhehjaCmpLRuBE38UHAhQgkzppSJKHwssrWYi+e+6MRpkd6w==" />
         </item>
 
    </channel>
