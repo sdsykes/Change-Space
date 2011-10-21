@@ -28,7 +28,11 @@ typedef enum {
 #define kVK_DownArrow 0x7D
 #define kVK_UpArrow 0x7E
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+#define POLLING_INTERVAL 1.0
+// how long we must wait before asking the current space when moving
+#define DESKTOP_MOVE_DELAY 0.4f
+
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
   IBOutlet NSWindow *window;
   IBOutlet NSPanel *preferences;
@@ -50,6 +54,8 @@ typedef enum {
   
   NSImage *blank_image;
   NSMutableArray *menu_images;
+  
+  NSTimer *pollingTimer;
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -57,6 +63,7 @@ typedef enum {
 @property (nonatomic, retain) StatusItemView *statusItemView;
 @property (nonatomic, retain) NSImage *blank_image;
 @property (nonatomic, retain) NSMutableArray *menu_images;
+@property (nonatomic, retain) NSTimer *pollingTimer;
 
 - (IBAction) updateGrid:(id) sender;
 

@@ -11,7 +11,7 @@
 @implementation AppDelegate
 
 @synthesize window;
-@synthesize c_bridge, statusItemView, blank_image, menu_images;
+@synthesize c_bridge, statusItemView, blank_image, menu_images, pollingTimer;
 
 #pragma mark defaults
 
@@ -59,6 +59,20 @@
 
   [NSApp activateIgnoringOtherApps:YES];
   [preferences makeKeyAndOrderFront:self];
+}
+
+#pragma mark -
+#pragma mark poll
+
+- (void) setupTimer
+{
+  if (!pollingTimer) {
+    self.pollingTimer = [[NSTimer scheduledTimerWithTimeInterval:POLLING_INTERVAL 
+                                                    target:self
+                                                  selector:@selector(updateDisplay:)
+                                                  userInfo:nil 
+                                                   repeats:YES] autorelease];
+  }
 }
 
 #pragma mark -
@@ -165,15 +179,15 @@
   [self updateLayout];
     
   if (firstLaunch) [self activatePreferences:self];
+  else [self setupTimer];
 }
 
-- (void)dealloc
+#pragma mark -
+#pragma mark preferences delegate
+
+- (void)windowWillClose:(NSNotification *)notification
 {
-  [c_bridge release];
-  [statusItemView release];
-  [blank_image release];
-  [menu_images release];
-  [super dealloc];
+  [self setupTimer];
 }
 
 #pragma mark -
@@ -190,7 +204,7 @@
   return str;
 }
 
-- (void) moveTo:(NSUInteger) spaceNumber
+- (void) moveTo:(NSUInteger)spaceNumber
 {
   if (spaceNumber == 1) {
     id sb = [SBApplication applicationWithBundleIdentifier:@"com.apple.SystemEvents"];
@@ -201,25 +215,31 @@
     NSUInteger spaceIndex = spaceNumber - 1;
     [c_bridge set_space_by_index:(unsigned int)spaceIndex];
   }
-  //[status_item setImage:[menu_images objectAtIndex:spaceNumber]];
-  // reset menu image...
+
   [statusItemView setTitle:[NSString stringWithFormat:@"%d", spaceNumber]];
 }
 
 - (NSDictionary *) remapDesktops
 {
   NSMutableDictionary *map = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInt:1], @"space_1", nil];
+
+  NSUInteger savedSpaceId = [c_bridge get_space_id];  
+
   for (int i = 2; i <= total_spaces; i++) {
     [self moveTo:i];
-    [NSThread sleepForTimeInterval:1.0f];
+    [NSThread sleepForTimeInterval:DESKTOP_MOVE_DELAY];
     NSUInteger currentSpaceId = [c_bridge get_space_id];
     [map setValue:[NSNumber numberWithInt:i] forKey:[self spaceKey:currentSpaceId]];
   }
-  
+
+  [self moveTo:[[map valueForKey:[self spaceKey:savedSpaceId]] intValue]];
+
+  [self setupTimer];  // makes sure timer is running even if prefs was not closed
+
   return map;
 }
 
-- (NSUInteger) current_space
+- (NSUInteger) currentSpace
 {
   NSUInteger currentSpaceId = [c_bridge get_space_id];
   id values = [self defaultsValues];
@@ -241,7 +261,7 @@
 
 - (void) go:(CSDirection)direction
 {
-  NSUInteger current = [self current_space];
+  NSUInteger current = [self currentSpace];
   NSUInteger spaceNumber = current;
   
   if (!spaceNumber) return;
@@ -282,6 +302,8 @@
   
   if (spaceNumber != current) {
     [self moveTo:spaceNumber];
+    // this delay means it works you to press the arrows fast
+    [NSThread sleepForTimeInterval:DESKTOP_MOVE_DELAY];
   }
 }
 
@@ -302,5 +324,21 @@
   [self go:CSDown];
 }
 
+- (void) updateDisplay:(id)sender 
+{
+  NSUInteger spaceNumber = [self currentSpace];
+  [statusItemView setTitle:[NSString stringWithFormat:@"%d", spaceNumber]];
+}
+
+#pragma mark -
+
+- (void)dealloc
+{
+  [c_bridge release];
+  [statusItemView release];
+  [blank_image release];
+  [menu_images release];
+  [super dealloc];
+}
 
 @end

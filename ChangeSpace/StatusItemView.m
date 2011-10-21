@@ -73,7 +73,8 @@
     [titleView setTitle:newTitle];
     
     [self setNeedsDisplay:YES];
-    [titleView fade];
+    // not needed when polling
+    // [titleView fade];
   }
 }
 
