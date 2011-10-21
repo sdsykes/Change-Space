@@ -11,7 +11,7 @@
 @implementation AppDelegate
 
 @synthesize window;
-@synthesize c_bridge, statusItemView, blank_image, menu_images, pollingTimer;
+@synthesize c_bridge, statusItemView, blank_image, menu_images, pollingTimer, ddh;
 
 #pragma mark defaults
 
@@ -59,6 +59,49 @@
 
   [NSApp activateIgnoringOtherApps:YES];
   [preferences makeKeyAndOrderFront:self];
+}
+
+- (NSString *)codeKeyForDirection:(CSDirection)direction
+{
+  switch(direction) {
+    case CSLeft:
+      return @"leftKeyCode";
+    case CSRight:
+      return @"rightKeyCode";
+    case CSUp:
+      return @"upKeyCode";
+    case CSDown:
+      return @"downKeyCode";
+  }
+}
+
+- (NSString *)flagsKeyForDirection:(CSDirection)direction
+{
+  switch(direction) {
+    case CSLeft:
+      return @"leftKeyFlags";
+    case CSRight:
+      return @"rightKeyFlags";
+    case CSUp:
+      return @"upKeyFlags";
+    case CSDown:
+      return @"downKeyFlags";
+  }
+}
+
+- (KeyCombo)keyComboForDirection:(CSDirection)direction
+{
+  KeyCombo combo;
+  combo.code = [[[self defaultsValues] valueForKey:[self codeKeyForDirection:direction]] longValue];
+  combo.flags = [[[self defaultsValues] valueForKey:[self flagsKeyForDirection:direction]] unsignedLongValue];
+  return combo;
+}
+
+- (void) setKeyCombo:(KeyCombo)combo direction:(CSDirection)direction
+{
+  id values = [self defaultsValues];
+  [values setValue:[NSNumber numberWithLong:combo.code] forKey:[self codeKeyForDirection:direction]];
+  [values setValue:[NSNumber numberWithUnsignedLong:combo.flags] forKey:[self flagsKeyForDirection:direction]];  
 }
 
 #pragma mark -
@@ -151,16 +194,43 @@
 #pragma mark -
 #pragma mark hotkeys
 
-- (void) registerHotkeys
+- (void)changeComboTo:(KeyCombo)combo dirction:(CSDirection)direction
 {
-  DDHotKeyCenter *ddh = [[DDHotKeyCenter alloc] init];
-  int flags =  NSControlKeyMask | NSShiftKeyMask;
+  SEL action;
   
-  [ddh registerHotKeyWithKeyCode:kVK_LeftArrow modifierFlags:flags target:self action:@selector(goLeft:) object:nil];
-  [ddh registerHotKeyWithKeyCode:kVK_RightArrow modifierFlags:flags target:self action:@selector(goRight:) object:nil];
-  [ddh registerHotKeyWithKeyCode:kVK_UpArrow modifierFlags:flags target:self action:@selector(goUp:) object:nil];
-  [ddh registerHotKeyWithKeyCode:kVK_DownArrow modifierFlags:flags target:self action:@selector(goDown:) object:nil];
+  switch(direction) {
+    case CSLeft:
+      action = @selector(goLeft:);
+      break;
+    case CSRight:
+      action = @selector(goRight:);
+      break;
+    case CSUp:
+      action = @selector(goUp:);
+      break;
+    case CSDown:
+      action = @selector(goDown:);
+      break;
+  }
+  
+  [ddh unregisterHotKeysWithTarget:self action:action];
+  [self setKeyCombo:combo direction:direction];
+  [ddh registerHotKeyWithKeyCode:combo.code modifierFlags:combo.flags target:self action:action object:nil];  
+}
 
+- (void)registerHotkeyForDirection:(CSDirection)direction
+{
+  KeyCombo combo;
+  combo = [self keyComboForDirection:direction];
+  [self changeComboTo:combo dirction:direction];
+}
+
+- (void)registerHotkeys
+{
+  [self registerHotkeyForDirection:CSLeft];
+  [self registerHotkeyForDirection:CSRight];
+  [self registerHotkeyForDirection:CSUp];
+  [self registerHotkeyForDirection:CSDown];
 }
 
 #pragma mark -
@@ -170,10 +240,14 @@
 {
   self.c_bridge = [[[SpacesCBridge alloc] init] autorelease];
   
+  [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"defaults" ofType:@"plist"]]];
+  
   BOOL firstLaunch = [self isFirstLaunch];
   
   NSMenu *statusMenu = [self setupMenu];
   [self initStatusBar:statusMenu];
+  
+  self.ddh = [[[DDHotKeyCenter alloc] init] autorelease];
   
   [self registerHotkeys];
   [self updateLayout];
@@ -188,6 +262,50 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
   [self setupTimer];
+}
+
+- (void)setupKeyRecorders
+{
+  KeyCombo combo;
+  combo = [self keyComboForDirection:CSLeft];
+  [leftKeys setKeyCombo:combo];
+  [leftKeys setCanCaptureGlobalHotKeys:YES];
+
+  combo = [self keyComboForDirection:CSRight];
+  [rightKeys setKeyCombo:combo];
+  [rightKeys setCanCaptureGlobalHotKeys:YES];
+
+  combo = [self keyComboForDirection:CSUp];
+  [upKeys setKeyCombo:combo];
+  [upKeys setCanCaptureGlobalHotKeys:YES];
+
+  combo = [self keyComboForDirection:CSDown];
+  [downKeys setKeyCombo:combo];
+  [downKeys setCanCaptureGlobalHotKeys:YES];
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+  [self setupKeyRecorders];
+}
+
+#pragma mark -
+#pragma mark key recorder delegate
+
+- (void)shortcutRecorder:(SRRecorderControl *)aRecorder keyComboDidChange:(KeyCombo)newKeyCombo
+{
+  if (aRecorder == leftKeys) {
+    [self changeComboTo:newKeyCombo dirction:CSLeft];
+  }
+  if (aRecorder == rightKeys) {
+    [self changeComboTo:newKeyCombo dirction:CSRight];
+  }
+  if (aRecorder == upKeys) {
+    [self changeComboTo:newKeyCombo dirction:CSUp];
+  }
+  if (aRecorder == downKeys) {
+    [self changeComboTo:newKeyCombo dirction:CSDown];
+  }
 }
 
 #pragma mark -

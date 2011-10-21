@@ -91,8 +91,9 @@
 	if ( flags & optionKey )    localOptionMod = YES;
 	if ( flags & shiftKey )     localShiftMod = YES;
 	if ( flags & controlKey )   localCtrlMod = YES;
-    
-	while (( globalHotKeyInfoDictionary = [globalHotKeysEnumerator nextObject] ))
+  
+  // disabled this check for change space so hotkeys can be assigned anyway
+	while (false && ( globalHotKeyInfoDictionary = [globalHotKeysEnumerator nextObject] ))
 	{
 		// Only check if global hotkey is enabled
 		if ( (CFBooleanRef)[globalHotKeyInfoDictionary objectForKey:(NSString *)kHISymbolicHotKeyEnabled] != kCFBooleanTrue )

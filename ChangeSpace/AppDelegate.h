@@ -56,6 +56,8 @@ typedef enum {
   NSMutableArray *menu_images;
   
   NSTimer *pollingTimer;
+  
+  DDHotKeyCenter *ddh;
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -64,6 +66,7 @@ typedef enum {
 @property (nonatomic, retain) NSImage *blank_image;
 @property (nonatomic, retain) NSMutableArray *menu_images;
 @property (nonatomic, retain) NSTimer *pollingTimer;
+@property (nonatomic, retain) DDHotKeyCenter *ddh;
 
 - (IBAction) updateGrid:(id) sender;
 

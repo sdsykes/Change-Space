@@ -3,8 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>gridRows</key>
-	<integer>3</integer>
+	<integer>2</integer>
 	<key>gridColumns</key>
-	<integer>3</integer>
+	<integer>2</integer>
+	<key>leftKeyCode</key>
+	<integer>123</integer>
+	<key>leftKeyFlags</key>
+	<integer>393216</integer>
+	<key>rightKeyCode</key>
+	<integer>124</integer>
+	<key>rightKeyFlags</key>
+	<integer>393216</integer>
+	<key>downKeyCode</key>
+	<integer>125</integer>
+	<key>downKeyFlags</key>
+	<integer>393216</integer>
+	<key>upKeyCode</key>
+	<integer>126</integer>
+	<key>upKeyFlags</key>
+	<integer>393216</integer>
 </dict>
 </plist>
