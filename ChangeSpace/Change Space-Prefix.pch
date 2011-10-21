@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'Change Space' target in the 'Change Space' project
+// Prefix header for all source files of the 'ChangeSpace' target in the 'ChangeSpace' project
 //
 
 #ifdef __OBJC__
