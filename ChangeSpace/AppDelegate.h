@@ -45,6 +45,7 @@ typedef enum {
   IBOutlet SRRecorderControl *rightKeys;
   IBOutlet SRRecorderControl *upKeys;
   IBOutlet SRRecorderControl *downKeys;
+  IBOutlet NSTextField *versionString;
   
   SpacesCBridge *c_bridge;
   

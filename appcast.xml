@@ -24,5 +24,14 @@
            <enclosure url="http://cloud.github.com/downloads/sdsykes/Change-Space/Change Space_2.0.0.app.zip" sparkle:version="2.0.0" length="560142" type="application/octet-stream" sparkle:dsaSignature="MCwCFGSasuej5GEhehjaCmpLRuBE38UHAhQgkzppSJKHwssrWYi+e+6MRpkd6w==" />
         </item>
 
+        <item>
+            <title>Version 2.0.1 (Adds version string)</title>
+            <sparkle:releaseNotesLink>
+             https://raw.github.com/sdsykes/Change-Space/master/release_notes_2.0.1.txt
+            </sparkle:releaseNotesLink>
+            <pubDate>Wed, 21 Oct 2011 20:30:00 +0300</pubDate>
+            <enclosure url="http://cloud.github.com/downloads/sdsykes/Change-Space/Change Space_2.0.1.app.zip" sparkle:version="2.0.1" length="560503" type="application/octet-stream" sparkle:dsaSignature="MCsCFD3iMjVcf2JDRM36OVrtCtS8KJGyAhMwdpqolC6Z+uk7cttbSCeZJX3j" />
+         </item>
+
    </channel>
 </rss>

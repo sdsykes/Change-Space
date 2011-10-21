@@ -284,9 +284,16 @@
   [downKeys setCanCaptureGlobalHotKeys:YES];
 }
 
+- (NSString *)versionString
+{
+  return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+}
+
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
   [self setupKeyRecorders];
+  
+  versionString.stringValue = [NSString stringWithFormat:@"Change Space v%@", [self versionString]];
 }
 
 #pragma mark -
