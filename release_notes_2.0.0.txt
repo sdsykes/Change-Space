@@ -1,0 +1,1 @@
+Version 2.0.0 is a major new version rewritten in Objective C, with configurable hotkeys, flexible grid layout, and accurate space number display.
