@@ -3,15 +3,26 @@
    <channel>
       <title>Change Spaces Changelog</title>
       <link>https://raw.github.com/sdsykes/Change-Space/master/appcast.xml</link>
-      <description>Fixes issues with activating preferences, bundles MacRuby</description>
+      <description>Navigate OSX Lion desktops as if they were a 2D grid of spaces</description>
       <language>en</language>
-         <item>
-            <title>Version 1.3.0 (Fixes issue #3)</title>
-						<sparkle:releaseNotesLink>
-							https://github.com/sdsykes/Change-Space
-						</sparkle:releaseNotesLink>
-            <pubDate>Wed, 14 Sep 2011 12:20:11 +0000</pubDate>
-            <enclosure url="https://github.com/downloads/sdsykes/Change-Space/Change%20Space.app.zip" sparkle:version="1.3.0" length="10106950" type="application/octet-stream" sparkle:dsaSignature="MC0CFC/k/53hHgYilnffqJDpB2ateBwOAhUAhYCjIsLZlUZhveq2AbDFMWB2yYk=" />
-         </item>
+
+       <item>
+          <title>Version 1.3.0 (Fixes issue #3)</title>
+          <sparkle:releaseNotesLink>
+           https://github.com/sdsykes/Change-Space
+          </sparkle:releaseNotesLink>
+          <pubDate>Wed, 14 Sep 2011 12:20:11 +0000</pubDate>
+          <enclosure url="https://github.com/downloads/sdsykes/Change-Space/Change%20Space.app.zip" sparkle:version="1.3.0" length="10106950" type="application/octet-stream" sparkle:dsaSignature="MC0CFC/k/53hHgYilnffqJDpB2ateBwOAhUAhYCjIsLZlUZhveq2AbDFMWB2yYk=" />
+        </item>
+
+        <item>
+           <title>Version 2.0.0 (New major version)</title>
+           <sparkle:releaseNotesLink>
+            https://github.com/sdsykes/Change-Space
+           </sparkle:releaseNotesLink>
+           <pubDate>Wed, 21 Oct 2011 19:00:00 +0300</pubDate>
+           <enclosure url="https://github.com/downloads/sdsykes/Change-Space/Change%20Space_2.0.0.app.zip" sparkle:version="2.0.0" length="560142" type="application/octet-stream" sparkle:dsaSignature="MCwCFGSasuej5GEhehjaCmpLRuBE38UHAhQgkzppSJKHwssrWYi+e+6MRpkd6w==" />
+        </item>
+
    </channel>
 </rss>
