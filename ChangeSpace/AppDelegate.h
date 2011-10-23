@@ -13,6 +13,8 @@
 #import "SpacesCBridge.h"
 #import "DDHotKeyCenter.h"
 #import "StatusItemView.h"
+#import "NotificationView.h"
+#import "TransparentWindow.h"
 
 #define MAX_DESKTOPS 16
 
@@ -59,6 +61,8 @@ typedef enum {
   NSTimer *pollingTimer;
   
   DDHotKeyCenter *ddh;
+  
+  TransparentWindow *transWindow;
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -68,6 +72,7 @@ typedef enum {
 @property (nonatomic, retain) NSMutableArray *menu_images;
 @property (nonatomic, retain) NSTimer *pollingTimer;
 @property (nonatomic, retain) DDHotKeyCenter *ddh;
+@property (nonatomic, retain) TransparentWindow *transWindow;
 
 - (IBAction) updateGrid:(id) sender;
 

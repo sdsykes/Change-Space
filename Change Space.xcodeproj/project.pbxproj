@@ -47,6 +47,10 @@
 		3A02BAA4145159D700993629 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A02BAA2145159D700993629 /* StatusItemView.m */; };
 		3A02BAA714516EF800993629 /* StatusTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A02BAA614516EF800993629 /* StatusTitleView.m */; };
 		3A02BAA814516EF800993629 /* StatusTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A02BAA614516EF800993629 /* StatusTitleView.m */; };
+		3AFB021D14544CBC007AC0F1 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFB021C14544CBC007AC0F1 /* NotificationView.m */; };
+		3AFB021E14544CBC007AC0F1 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFB021C14544CBC007AC0F1 /* NotificationView.m */; };
+		3AFB02221454520A007AC0F1 /* TransparentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFB02211454520A007AC0F1 /* TransparentWindow.m */; };
+		3AFB02231454520A007AC0F1 /* TransparentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFB02211454520A007AC0F1 /* TransparentWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +124,10 @@
 		3A02BAA2145159D700993629 /* StatusItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItemView.m; sourceTree = "<group>"; };
 		3A02BAA514516EF700993629 /* StatusTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTitleView.h; sourceTree = "<group>"; };
 		3A02BAA614516EF800993629 /* StatusTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTitleView.m; sourceTree = "<group>"; };
+		3AFB021B14544CBC007AC0F1 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
+		3AFB021C14544CBC007AC0F1 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
+		3AFB02201454520A007AC0F1 /* TransparentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransparentWindow.h; sourceTree = "<group>"; };
+		3AFB02211454520A007AC0F1 /* TransparentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransparentWindow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +216,10 @@
 				3A02BAA2145159D700993629 /* StatusItemView.m */,
 				3A02BAA514516EF700993629 /* StatusTitleView.h */,
 				3A02BAA614516EF800993629 /* StatusTitleView.m */,
+				3AFB021B14544CBC007AC0F1 /* NotificationView.h */,
+				3AFB021C14544CBC007AC0F1 /* NotificationView.m */,
+				3AFB02201454520A007AC0F1 /* TransparentWindow.h */,
+				3AFB02211454520A007AC0F1 /* TransparentWindow.m */,
 			);
 			path = ChangeSpace;
 			sourceTree = "<group>";
@@ -403,6 +415,8 @@
 				3A02BA9514505CE400993629 /* DDHotKeyCenter.m in Sources */,
 				3A02BAA3145159D700993629 /* StatusItemView.m in Sources */,
 				3A02BAA714516EF800993629 /* StatusTitleView.m in Sources */,
+				3AFB021D14544CBC007AC0F1 /* NotificationView.m in Sources */,
+				3AFB02221454520A007AC0F1 /* TransparentWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +430,8 @@
 				3A02BA9614505CE400993629 /* DDHotKeyCenter.m in Sources */,
 				3A02BAA4145159D700993629 /* StatusItemView.m in Sources */,
 				3A02BAA814516EF800993629 /* StatusTitleView.m in Sources */,
+				3AFB021E14544CBC007AC0F1 /* NotificationView.m in Sources */,
+				3AFB02231454520A007AC0F1 /* TransparentWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

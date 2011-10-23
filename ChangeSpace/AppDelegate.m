@@ -10,7 +10,7 @@
 
 @implementation AppDelegate
 
-@synthesize window;
+@synthesize window, transWindow;
 @synthesize c_bridge, statusItemView, blank_image, menu_images, pollingTimer, ddh;
 
 #pragma mark defaults
@@ -251,7 +251,10 @@
   
   [self registerHotkeys];
   [self updateLayout];
-    
+
+  self.transWindow = [[[TransparentWindow alloc] init] autorelease];
+  [transWindow setCollectionBehavior: NSWindowCollectionBehaviorCanJoinAllSpaces];
+  
   if (firstLaunch) [self activatePreferences:self];
   else [self setupTimer];
 }
@@ -313,6 +316,40 @@
   if (aRecorder == downKeys) {
     [self changeComboTo:newKeyCombo dirction:CSDown];
   }
+}
+
+#pragma mark -
+#pragma mark notification view
+
+- (void) notify:(CSDirection)direction
+{
+  NSString *dirStr;
+  
+  switch(direction) {
+    case CSLeft:
+      dirStr = @"←";
+      break;
+    case CSRight:
+      dirStr = @"→";
+      break;
+    case CSUp:
+      dirStr = @"↑";
+      break;
+    case CSDown:
+      dirStr = @"↓";
+      break;
+  }
+  
+  NSRect screen = [[NSScreen mainScreen] frame];
+  NotificationView *notificationView = [[[NotificationView alloc] initWithFrame:CGRectMake(screen.size.width / 2, screen.size.height / 2, 50, 50)] autorelease];
+  notificationView.mText = dirStr;
+  [transWindow setContentView:notificationView];
+
+  [transWindow display];  // make ready for display when the window is ordered front
+
+  [notificationView fade];
+  
+  [transWindow orderFront:self];
 }
 
 #pragma mark -
@@ -426,6 +463,8 @@
   }
   
   if (spaceNumber != current) {
+    [self notify:direction];
+    
     [self moveTo:spaceNumber];
     // this delay means it works you to press the arrows fast
     [NSThread sleepForTimeInterval:DESKTOP_MOVE_DELAY];
