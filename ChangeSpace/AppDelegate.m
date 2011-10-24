@@ -359,6 +359,21 @@
 }
 
 #pragma mark -
+#pragma mark front process
+
+- (void) storeFrontProcessForSpace:(NSUInteger)spaceNumber
+{
+  ProcessSerialNumberPtr fp = frontProcess + (spaceNumber - 1);
+  GetFrontProcess(fp);
+}
+
+- (void) setFrontProcessForSpace:(NSUInteger)spaceNumber
+{
+  ProcessSerialNumberPtr fp = frontProcess + (spaceNumber - 1);
+  SetFrontProcess(fp);  
+}
+
+#pragma mark -
 #pragma mark movement
 
 - (NSUInteger) fourCharCode:(char *)s
@@ -434,6 +449,8 @@
   
   if (!spaceNumber) return;
   
+  [self storeFrontProcessForSpace: spaceNumber];
+  
   switch(direction) {
     case CSUp:
       spaceNumber -= width;
@@ -478,6 +495,8 @@
     [self moveTo:spaceNumber];
     // this delay means it works you to press the arrows fast
     [NSThread sleepForTimeInterval:DESKTOP_MOVE_DELAY];
+
+    [self setFrontProcessForSpace: spaceNumber];
   }
 }
 
