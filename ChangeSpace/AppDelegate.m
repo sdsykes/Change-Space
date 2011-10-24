@@ -36,6 +36,12 @@
   return [cv boolValue];
 }
 
+- (BOOL) sameRowWrap
+{
+  NSNumber *srw = [[self defaultsValues] valueForKey:@"sameRowWrap"];
+  return [srw boolValue];
+}
+
 #pragma mark -
 #pragma mark preferences
 
@@ -451,13 +457,17 @@
       break;
     case CSLeft:
       spaceNumber -= 1;
-      if (spaceNumber < 1) {
+      if ([self sameRowWrap]) {
+        if (spaceNumber % width == 0) spaceNumber += width;
+      } else if (spaceNumber < 1) {
         spaceNumber += total_spaces;
       }
       break;
     case CSRight:
       spaceNumber += 1;
-      if (spaceNumber > total_spaces) {
+      if ([self sameRowWrap]) {
+        if (spaceNumber % width == 1) spaceNumber -= width;
+      } else if (spaceNumber > total_spaces) {
         spaceNumber -= total_spaces;
       }
   }
