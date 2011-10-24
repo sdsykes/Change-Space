@@ -8,6 +8,14 @@
 
 #import "AppDelegate.h"
 
+@interface AppDelegate ()
+
+- (NSUInteger) currentSpace;
+- (void) storeFrontProcessForSpace:(NSUInteger)spaceNumber;
+
+@end
+
+
 @implementation AppDelegate
 
 @synthesize window, transWindow;
@@ -113,12 +121,21 @@
 #pragma mark -
 #pragma mark poll
 
+- (void) pollWork:(id)sender
+{
+  NSUInteger spaceNumber = [self currentSpace];
+
+  [statusItemView setTitle:[NSString stringWithFormat:@"%d", spaceNumber]];
+  
+  [self storeFrontProcessForSpace:spaceNumber];
+}
+
 - (void) setupTimer
 {
   if (!pollingTimer) {
     self.pollingTimer = [[NSTimer scheduledTimerWithTimeInterval:POLLING_INTERVAL 
                                                     target:self
-                                                  selector:@selector(updateDisplay:)
+                                                  selector:@selector(pollWork:)
                                                   userInfo:nil 
                                                    repeats:YES] autorelease];
   }
@@ -515,12 +532,6 @@
 - (void) goDown:(id)sender
 {
   [self go:CSDown];
-}
-
-- (void) updateDisplay:(id)sender 
-{
-  NSUInteger spaceNumber = [self currentSpace];
-  [statusItemView setTitle:[NSString stringWithFormat:@"%d", spaceNumber]];
 }
 
 #pragma mark -
