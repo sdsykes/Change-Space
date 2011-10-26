@@ -577,7 +577,7 @@
 						<object class="NSCustomView" id="106996550">
 							<reference key="NSNextResponder" ref="125547334"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{316, 283}, {131, 34}}</string>
+							<string key="NSFrame">{{316, 288}, {131, 25}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="694429664"/>
@@ -587,7 +587,7 @@
 						<object class="NSCustomView" id="925941072">
 							<reference key="NSNextResponder" ref="125547334"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{316, 241}, {131, 34}}</string>
+							<string key="NSFrame">{{316, 246}, {131, 25}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="307733604"/>
@@ -597,7 +597,7 @@
 						<object class="NSCustomView" id="716406574">
 							<reference key="NSNextResponder" ref="125547334"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{316, 199}, {131, 34}}</string>
+							<string key="NSFrame">{{316, 204}, {131, 25}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="16835123"/>
@@ -607,7 +607,7 @@
 						<object class="NSCustomView" id="467951076">
 							<reference key="NSNextResponder" ref="125547334"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{316, 157}, {131, 34}}</string>
+							<string key="NSFrame">{{316, 163}, {131, 24}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="628358878"/>
@@ -620,7 +620,6 @@
 							<string key="NSFrame">{{352, 8}, {152, 17}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:3983</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="177269468">
