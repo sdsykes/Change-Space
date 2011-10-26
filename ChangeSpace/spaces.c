@@ -41,3 +41,25 @@ void set_space_by_index(int space)
   CFStringRef numstr = CFStringCreateWithFormat(NULL, nil, CFSTR("%d"), space);
   CFNotificationCenterPostNotification(nc, CFSTR("com.apple.switchSpaces"), numstr, NULL, TRUE);
 }
+
+int get_front_window_pid(void)
+{
+  int pid;
+  CFArrayRef windows = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
+  CFIndex i, n;
+  
+  for (i = 0, n = CFArrayGetCount(windows); i < n; i++) {
+    CFDictionaryRef windict = CFArrayGetValueAtIndex(windows, i);
+    CFNumberRef layernum = CFDictionaryGetValue(windict, kCGWindowLayer);
+    CFNumberRef pidnum = CFDictionaryGetValue(windict, kCGWindowOwnerPID);
+    if (layernum && pidnum) {
+      int layer;
+      CFNumberGetValue(layernum,  kCFNumberIntType, &layer);
+      if (layer == 0) {
+        CFNumberGetValue(pidnum,  kCFNumberIntType, &pid);
+        return pid;
+      }
+    }
+  }
+  return -1;
+}

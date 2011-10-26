@@ -10,7 +10,8 @@
 
 @interface SpacesCBridge : NSObject
 
-- (unsigned int) get_space_id;
-- (void) set_space_by_index:(unsigned int) space;
+- (int) get_space_id;
+- (void) set_space_by_index:(int)space;
+- (int) get_front_window_pid;
 
 @end

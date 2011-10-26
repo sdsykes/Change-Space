@@ -63,8 +63,6 @@ typedef enum {
   DDHotKeyCenter *ddh;
   
   TransparentWindow *transWindow;
-  
-  ProcessSerialNumber frontProcess[MAX_DESKTOPS];
 }
 
 @property (assign) IBOutlet NSWindow *window;

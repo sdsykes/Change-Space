@@ -11,7 +11,6 @@
 @interface AppDelegate ()
 
 - (NSUInteger) currentSpace;
-- (void) storeFrontProcessForSpace:(NSUInteger)spaceNumber;
 
 @end
 
@@ -123,11 +122,9 @@
 
 - (void) pollWork:(id)sender
 {
-  NSUInteger spaceNumber = [self currentSpace];
+  NSUInteger spaceNumber = [self currentSpace];    
 
   [statusItemView setTitle:[NSString stringWithFormat:@"%d", spaceNumber]];
-  
-  [self storeFrontProcessForSpace:spaceNumber];
 }
 
 - (void) setupTimer
@@ -346,7 +343,7 @@
 
 - (void) notify:(CSDirection)direction
 {
-  NSString *dirStr;
+  NSString *dirStr = @"";
   
   switch(direction) {
     case CSLeft:
@@ -376,18 +373,13 @@
 }
 
 #pragma mark -
-#pragma mark front process
+#pragma mark front window
 
-- (void) storeFrontProcessForSpace:(NSUInteger)spaceNumber
+- (void) activateFrontWindow
 {
-  ProcessSerialNumberPtr fp = frontProcess + (spaceNumber - 1);
-  GetFrontProcess(fp);
-}
-
-- (void) setFrontProcessForSpace:(NSUInteger)spaceNumber
-{
-  ProcessSerialNumberPtr fp = frontProcess + (spaceNumber - 1);
-  SetFrontProcess(fp);  
+  ProcessSerialNumber fp;
+  GetProcessForPID([c_bridge get_front_window_pid], &fp);
+  SetFrontProcessWithOptions(&fp, kSetFrontProcessFrontWindowOnly);
 }
 
 #pragma mark -
@@ -466,8 +458,6 @@
   
   if (!spaceNumber) return;
   
-  [self storeFrontProcessForSpace: spaceNumber];
-  
   switch(direction) {
     case CSUp:
       spaceNumber -= width;
@@ -508,12 +498,12 @@
   
   if (spaceNumber != current) {
     [self notify:direction];
-    
+
     [self moveTo:spaceNumber];
     // this delay means it works you to press the arrows fast
     [NSThread sleepForTimeInterval:DESKTOP_MOVE_DELAY];
 
-    [self setFrontProcessForSpace: spaceNumber];
+    [self activateFrontWindow];
   }
 }
 

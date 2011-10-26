@@ -12,12 +12,16 @@
 
 @implementation SpacesCBridge
 
-- (unsigned int) get_space_id {
+- (int) get_space_id {
   return get_space_id();
 }
 
-- (void) set_space_by_index:(unsigned int) space {
+- (void) set_space_by_index:(int)space {
   set_space_by_index(space);
+}
+
+- (int) get_front_window_pid {
+  return get_front_window_pid();
 }
 
 @end
