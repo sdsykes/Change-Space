@@ -50,6 +50,8 @@ h2. Known issues
 
 Change Space cannot change to desktop 1 without sending ctrl-1 to the system. Unfortunately this doesn't work when if you are holding the shift key down at the time. So sometimes if you do not release the shift key quickly this does not work. This only affects desktop 1, I recommend you seldom use this one for this reason.
 
+If you change the key mappings of Change Space to ctrl-arrows, please be sure to change the mappings for mission control (in System Preferences->Keyboard->Mission Control) so they do not use the same keys. You will likely get inconsistent behaviour when moving around the horizontal ends of your grid if they are the same.
+
 I have seen the mapping getting mixed up, and it cycling through the desktops on every space change. If this happens, try deleting ~/Library/Preferences/net.sdsykes.Change-Space.plist and restart the app. At any rate, please report issues like this in github issues.
 
 h2. Author
