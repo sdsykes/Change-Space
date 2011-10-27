@@ -343,7 +343,7 @@
 		[displayString drawInRect:textRect withAttributes:attributes];
 		
     // draw a focus ring...?
-		if ( [self showsFirstResponder] )
+		if ( false && [self showsFirstResponder] ) // disabled - sds
 		{
 			[NSGraphicsContext saveGraphicsState];
 			NSSetFocusRingStyle(NSFocusRingOnly);

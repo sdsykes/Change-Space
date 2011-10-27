@@ -576,7 +576,7 @@
 						</object>
 						<object class="NSCustomView" id="106996550">
 							<reference key="NSNextResponder" ref="125547334"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">4364</int>
 							<string key="NSFrame">{{316, 288}, {131, 25}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
@@ -586,7 +586,7 @@
 						</object>
 						<object class="NSCustomView" id="925941072">
 							<reference key="NSNextResponder" ref="125547334"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">4364</int>
 							<string key="NSFrame">{{316, 246}, {131, 25}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
@@ -596,7 +596,7 @@
 						</object>
 						<object class="NSCustomView" id="716406574">
 							<reference key="NSNextResponder" ref="125547334"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">4364</int>
 							<string key="NSFrame">{{316, 204}, {131, 25}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
@@ -606,7 +606,7 @@
 						</object>
 						<object class="NSCustomView" id="467951076">
 							<reference key="NSNextResponder" ref="125547334"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">4364</int>
 							<string key="NSFrame">{{316, 163}, {131, 24}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
@@ -1678,6 +1678,7 @@
 				<string key="584.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="585.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="586.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<dictionary class="NSMutableDictionary" key="587.IBAttributePlaceholdersKey"/>
 				<string key="587.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="588.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="589.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
