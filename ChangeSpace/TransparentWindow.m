@@ -28,4 +28,10 @@
   
 }
 
+- (void)resetFrame
+{
+  NSRect screen = [[NSScreen mainScreen] frame];
+  [self setFrame:screen display:NO];
+}
+
 @end

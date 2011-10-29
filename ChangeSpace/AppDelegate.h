@@ -58,7 +58,7 @@ typedef enum {
   NSImage *blank_image;
   NSMutableArray *menu_images;
   
-  NSTimer *pollingTimer;
+  BOOL observing;
   
   DDHotKeyCenter *ddh;
   

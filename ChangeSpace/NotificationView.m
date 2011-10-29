@@ -35,16 +35,14 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  // draw desktop name    
   NSSize	textSize = [mText sizeWithAttributes: mTextAttributes];
   NSPoint	textPosition; 
-	// the text will be centered horizontally and vertically below the image 
 	textPosition.x = 0.5 * (dirtyRect.size.width - textSize.width);
   textPosition.y = 0.5 * (dirtyRect.size.height - textSize.height);
   [mText drawAtPoint:textPosition withAttributes: mTextAttributes];
 }
 
-- (void) fade
+- (void)fade
 {
   [self setAlphaValue:1.0];
   

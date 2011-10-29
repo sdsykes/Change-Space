@@ -118,23 +118,27 @@
 }
 
 #pragma mark -
-#pragma mark poll
+#pragma mark notifications
 
-- (void) pollWork:(id)sender
+- (void)workspaceObserver:(id)aNotification
 {
   NSUInteger spaceNumber = [self currentSpace];    
-
+  
   [statusItemView setTitle:[NSString stringWithFormat:@"%d", spaceNumber]];
 }
 
-- (void) setupTimer
+- (void) setupNotification
 {
-  if (!pollingTimer) {
-    self.pollingTimer = [[NSTimer scheduledTimerWithTimeInterval:POLLING_INTERVAL 
-                                                    target:self
-                                                  selector:@selector(pollWork:)
-                                                  userInfo:nil 
-                                                   repeats:YES] autorelease];
+  if (!observing) {
+    observing = YES;
+
+    NSNotificationCenter *notCenter;
+    notCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
+    [notCenter addObserver:self
+                selector:@selector(workspaceObserver:)
+                    name:NSWorkspaceActiveSpaceDidChangeNotification object:nil];
+
+    [self workspaceObserver:nil];  // shows current desktop when app is first opened
   }
 }
 
@@ -276,7 +280,8 @@
   [transWindow setCollectionBehavior: NSWindowCollectionBehaviorCanJoinAllSpaces];
   
   if (firstLaunch) [self activatePreferences:self];
-  else [self setupTimer];
+  else [self setupNotification];
+  
 }
 
 #pragma mark -
@@ -284,7 +289,7 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
-  [self setupTimer];
+  [self setupNotification];
 }
 
 - (void)setupKeyRecorders
@@ -363,6 +368,9 @@
   NSRect screen = [[NSScreen mainScreen] frame];
   NotificationView *notificationView = [[[NotificationView alloc] initWithFrame:CGRectMake(screen.size.width / 2, screen.size.height / 2, 50, 50)] autorelease];
   notificationView.mText = dirStr;
+
+  [transWindow resetFrame];  // the screen size may have changed if using ext monitors etc
+  
   [transWindow setContentView:notificationView];
 
   [transWindow display];  // make ready for display when the window is ordered front
@@ -426,7 +434,7 @@
 
   [self moveTo:[[map valueForKey:[self spaceKey:savedSpaceId]] intValue]];
 
-  [self setupTimer];  // makes sure timer is running even if prefs was not closed
+  [self setupNotification];  // makes sure timer is running even if prefs was not closed
 
   return map;
 }

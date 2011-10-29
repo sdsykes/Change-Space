@@ -10,4 +10,6 @@
 
 @interface TransparentWindow : NSWindow
 
+- (void)resetFrame;
+
 @end
