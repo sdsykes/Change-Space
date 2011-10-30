@@ -56,8 +56,8 @@
 {
   width = [[[gridColumns selectedItem] title] intValue];
   height = [[[gridRows selectedItem] title] intValue];
-  total_spaces = width * height;
-  [desktopCount setStringValue:[NSString stringWithFormat:@"%d", total_spaces]];
+  totalSpaces = width * height;
+  [desktopCount setStringValue:[NSString stringWithFormat:@"%d", totalSpaces]];
 }
 
 - (IBAction) updateGrid:(id) sender
@@ -70,6 +70,8 @@
   [gridRows selectItemAtIndex:[[[self defaultsValues] valueForKey:@"gridRows"] intValue]];
   [gridColumns selectItemAtIndex:[[[self defaultsValues] valueForKey:@"gridColumns"] intValue]];
 
+  savedTotalSpaces = totalSpaces;
+  
   [NSApp activateIgnoringOtherApps:YES];
   [preferences makeKeyAndOrderFront:self];
 }
@@ -123,8 +125,12 @@
 - (void)workspaceObserver:(id)aNotification
 {
   NSUInteger spaceNumber = [self currentSpace];    
+  NSString *displayString;
+
+  if (spaceNumber > 0) displayString = [NSString stringWithFormat:@"%d", spaceNumber];
+  else displayString = @"?";
   
-  [statusItemView setTitle:[NSString stringWithFormat:@"%d", spaceNumber]];
+  [statusItemView setTitle:displayString];
 }
 
 - (void) setupNotification
@@ -289,6 +295,7 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
+  if (totalSpaces > savedTotalSpaces) remapNeeded = YES;
   [self setupNotification];
 }
 
@@ -425,20 +432,26 @@
 
   NSUInteger savedSpaceId = [c_bridge get_space_id];  
 
-  for (int i = 2; i <= total_spaces; i++) {
+  for (int i = 2; i <= totalSpaces; i++) {
     [self moveTo:i];
     [NSThread sleepForTimeInterval:DESKTOP_MOVE_DELAY];
     NSUInteger currentSpaceId = [c_bridge get_space_id];
     [map setValue:[NSNumber numberWithInt:i] forKey:[self spaceKey:currentSpaceId]];
   }
 
-  [self moveTo:[[map valueForKey:[self spaceKey:savedSpaceId]] intValue]];
-
+  NSNumber *savedSpaceNumber = (NSNumber *)[map valueForKey:[self spaceKey:savedSpaceId]];
+  if (!savedSpaceNumber) {
+    [map setValue:[NSNumber numberWithInt:0] forKey:[self spaceKey:savedSpaceId]];
+  } else {
+    [self moveTo:[savedSpaceNumber intValue]];
+  }
+  
   [self setupNotification];  // makes sure timer is running even if prefs was not closed
 
   return map;
 }
 
+// returns 0 for an unknown space, or full screen app space
 - (NSUInteger) currentSpace
 {
   NSUInteger currentSpaceId = [c_bridge get_space_id];
@@ -448,13 +461,17 @@
   
   NSNumber *spaceNumber = [spaceMap valueForKey:[self spaceKey:currentSpaceId]];
   
-  if (!spaceNumber) {
+  NSUInteger spaceNumberInt = [spaceNumber unsignedIntValue];
+  
+  if (!spaceNumber || (spaceNumberInt == 0 && remapNeeded) || spaceNumberInt > totalSpaces) {
+    if ([c_bridge is_full_screen]) return 0;
+    
     spaceMap = [self remapDesktops];
+    [values setValue:spaceMap forKey:@"spaceMap"];
+    remapNeeded = NO;
   }
   
   spaceNumber = [spaceMap valueForKey:[self spaceKey:currentSpaceId]];
-  
-  [values setValue:spaceMap forKey:@"spaceMap"];
   
   return [spaceNumber intValue];
 }
@@ -471,7 +488,7 @@
       spaceNumber -= width;
       if (spaceNumber < 1) {
         if ([self circulateVertical]) {
-          spaceNumber += total_spaces;
+          spaceNumber += totalSpaces;
         } else {
           spaceNumber = current;
         }
@@ -479,9 +496,9 @@
       break;
     case CSDown:
       spaceNumber += width;
-      if (spaceNumber > total_spaces) {
+      if (spaceNumber > totalSpaces) {
         if ([self circulateVertical]) {
-          spaceNumber -= total_spaces;
+          spaceNumber -= totalSpaces;
         } else {
           spaceNumber = current;
         }
@@ -492,15 +509,15 @@
       if ([self sameRowWrap]) {
         if (spaceNumber % width == 0) spaceNumber += width;
       } else if (spaceNumber < 1) {
-        spaceNumber += total_spaces;
+        spaceNumber += totalSpaces;
       }
       break;
     case CSRight:
       spaceNumber += 1;
       if ([self sameRowWrap]) {
         if (spaceNumber % width == 1) spaceNumber -= width;
-      } else if (spaceNumber > total_spaces) {
-        spaceNumber -= total_spaces;
+      } else if (spaceNumber > totalSpaces) {
+        spaceNumber -= totalSpaces;
       }
   }
   

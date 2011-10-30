@@ -51,14 +51,14 @@ typedef enum {
   
   SpacesCBridge *c_bridge;
   
-  NSUInteger width, height, total_spaces;
+  NSUInteger width, height, totalSpaces, savedTotalSpaces;
   
   StatusItemView *statusItemView;
   
   NSImage *blank_image;
   NSMutableArray *menu_images;
   
-  BOOL observing;
+  BOOL observing, remapNeeded;
   
   DDHotKeyCenter *ddh;
   
