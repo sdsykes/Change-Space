@@ -63,3 +63,20 @@ int get_front_window_pid(void)
   }
   return -1;
 }
+
+int is_full_screen(void)
+{
+  CFArrayRef windows = CGWindowListCopyWindowInfo( kCGWindowListOptionOnScreenOnly, kCGNullWindowID );
+  CFIndex i, n;
+  
+  for (i = 0, n = CFArrayGetCount(windows); i < n; i++) {
+    CFDictionaryRef windict = CFArrayGetValueAtIndex(windows, i);
+    CFNumberRef layernum = CFDictionaryGetValue(windict, kCGWindowLayer);
+    if (layernum) {
+      int layer;
+      CFNumberGetValue(layernum,  kCFNumberIntType, &layer);
+      if (layer == -1) return 1;
+    }
+  }
+  return 0;
+}

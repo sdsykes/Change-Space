@@ -24,4 +24,8 @@
   return get_front_window_pid();
 }
 
+- (int) is_full_screen {
+  return is_full_screen();
+}
+
 @end
