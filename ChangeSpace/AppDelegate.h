@@ -13,7 +13,6 @@
 #import "SpacesCBridge.h"
 #import "DDHotKeyCenter.h"
 #import "StatusItemView.h"
-#import "NotificationView.h"
 #import "TransparentWindow.h"
 
 #define MAX_DESKTOPS 16
@@ -22,7 +21,11 @@ typedef enum {
   CSLeft,
   CSRight,
   CSUp,
-  CSDown
+  CSDown,
+  CSUpLeft,
+  CSUpRight,
+  CSDownLeft,
+  CSDownRight
 } CSDirection;
 
 #define kVK_LeftArrow 0x7B

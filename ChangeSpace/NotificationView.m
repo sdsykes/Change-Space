@@ -10,7 +10,7 @@
 
 @implementation NotificationView
 
-@synthesize mText, mTextAttributes;
+@synthesize mTextAttributes, direction;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -33,13 +33,58 @@
     return self;
 }
 
+- (CGFloat)angleForDirection
+{
+  CGFloat angle = 0;
+  
+  switch(direction) {
+    case CSLeft:
+      angle = 180;
+      break;
+    case CSRight:
+      angle = 0;
+      break;
+    case CSUp:
+      angle = 90;
+      break;
+    case CSDown:
+      angle = -90;
+      break;
+    case CSUpLeft:
+      angle = 135;
+      break;
+    case CSUpRight:
+      angle = 45;
+      break;
+    case CSDownLeft:
+      angle = -135;
+      break;
+    case CSDownRight:
+      angle = -45;
+      break;
+  }
+  return angle;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
-  NSSize	textSize = [mText sizeWithAttributes: mTextAttributes];
+  NSString *dirStr = @"→";
+  
+  NSSize	textSize = [dirStr sizeWithAttributes: mTextAttributes];
   NSPoint	textPosition; 
 	textPosition.x = 0.5 * (dirtyRect.size.width - textSize.width);
   textPosition.y = 0.5 * (dirtyRect.size.height - textSize.height);
-  [mText drawAtPoint:textPosition withAttributes: mTextAttributes];
+  
+  NSAffineTransform* transform = [NSAffineTransform transform];
+  NSSize originShift = NSMakeSize(self.bounds.origin.x + self.bounds.size.width /
+                                  2.0, self.bounds.origin.y + self.bounds.size.height / 2.0);
+  [transform translateXBy: originShift.width yBy: originShift.height];
+  [transform rotateByDegrees:[self angleForDirection]];
+  [transform translateXBy: -originShift.width yBy: -originShift.height];
+  [transform concat];
+
+  [dirStr drawAtPoint:textPosition withAttributes: mTextAttributes];
+
 }
 
 - (void)fade

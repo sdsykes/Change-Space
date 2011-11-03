@@ -7,16 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AppDelegate.h"
 
 @interface NotificationView : NSView
 {
   NSMutableDictionary*	mTextAttributes;	//!< Attributes for desktop name text 
-	
-	NSString*	mText;
+	CSDirection direction;
 }
 
 @property (nonatomic, retain) NSMutableDictionary*	mTextAttributes;
-@property (nonatomic, retain) NSString*	mText;
+@property (assign) CSDirection direction;
 
 - (void) fade;
 

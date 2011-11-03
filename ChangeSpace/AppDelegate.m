@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NotificationView.h"
 
 @interface AppDelegate ()
 
@@ -87,6 +88,7 @@
       return @"upKeyCode";
     case CSDown:
       return @"downKeyCode";
+    default: return @"";
   }
 }
 
@@ -101,6 +103,7 @@
       return @"upKeyFlags";
     case CSDown:
       return @"downKeyFlags";
+    default: return @"";
   }
 }
 
@@ -241,6 +244,7 @@
     case CSDown:
       action = @selector(goDown:);
       break;
+    default: break;
   }
   
   [ddh unregisterHotKeysWithTarget:self action:action];
@@ -353,29 +357,12 @@
 #pragma mark -
 #pragma mark notification view
 
-- (void) notify:(CSDirection)direction
+- (void) notify:(CSDirection)direction fromSpace:(NSUInteger)fromSpace toSpace:(NSUInteger)toSpace
 {
-  NSString *dirStr = @"";
-  
-  switch(direction) {
-    case CSLeft:
-      dirStr = @"←";
-      break;
-    case CSRight:
-      dirStr = @"→";
-      break;
-    case CSUp:
-      dirStr = @"↑";
-      break;
-    case CSDown:
-      dirStr = @"↓";
-      break;
-  }
-  
   NSRect screen = [[NSScreen mainScreen] frame];
   NotificationView *notificationView = [[[NotificationView alloc] initWithFrame:CGRectMake(screen.size.width / 2, screen.size.height / 2, 50, 50)] autorelease];
-  notificationView.mText = dirStr;
-
+  notificationView.direction = direction;
+  
   [transWindow resetFrame];  // the screen size may have changed if using ext monitors etc
   
   [transWindow setContentView:notificationView];
@@ -476,14 +463,15 @@
   return [spaceNumber intValue];
 }
 
-- (void) go:(CSDirection)direction
+- (void) go:(CSDirection)keyDirection
 {
   NSUInteger current = [self currentSpace];
   NSUInteger spaceNumber = current;
+  CSDirection direction = keyDirection;
   
   if (!spaceNumber) return;
   
-  switch(direction) {
+  switch(keyDirection) {
     case CSUp:
       spaceNumber -= width;
       if (spaceNumber < 1) {
@@ -506,23 +494,36 @@
       break;
     case CSLeft:
       spaceNumber -= 1;
-      if ([self sameRowWrap]) {
-        if (spaceNumber % width == 0) spaceNumber += width;
-      } else if (spaceNumber < 1) {
-        spaceNumber += totalSpaces;
+      if (spaceNumber % width == 0) {
+        if ([self sameRowWrap]) {
+          spaceNumber += width;
+          direction = CSRight;
+        } else if (spaceNumber < 1) {
+          spaceNumber += totalSpaces;
+          direction = CSDownRight;
+        } else {
+          direction = CSUpRight;
+        }
       }
       break;
     case CSRight:
       spaceNumber += 1;
-      if ([self sameRowWrap]) {
-        if (spaceNumber % width == 1) spaceNumber -= width;
-      } else if (spaceNumber > totalSpaces) {
-        spaceNumber -= totalSpaces;
+      if (spaceNumber % width == 1) {
+        if ([self sameRowWrap]) {
+          spaceNumber -= width;
+          direction = CSLeft;
+        } else if (spaceNumber > totalSpaces) {
+          spaceNumber -= totalSpaces;
+          direction = CSUpLeft;
+        } else {
+          direction = CSDownLeft;
+        }
       }
+    default: break;
   }
   
   if (spaceNumber != current) {
-    [self notify:direction];
+    [self notify:direction fromSpace:current toSpace:spaceNumber];
 
     [self moveTo:spaceNumber];
     // this delay means it works you to press the arrows fast
