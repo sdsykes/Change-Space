@@ -14,5 +14,6 @@
 - (void) set_space_by_index:(int)space;
 - (int) get_front_window_pid;
 - (int) is_full_screen;
+- (int) total_spaces;
 
 @end

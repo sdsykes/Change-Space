@@ -35,8 +35,17 @@ int get_space_id(void)
   return -1;
 }
 
+int total_spaces(void)
+{
+  int rows, cols;
+  CoreDockGetWorkspacesCount(&rows, &cols);
+  
+  return cols;  
+}
+
 void set_space_by_index(int space)
 {
+  
   CFNotificationCenterRef nc = CFNotificationCenterGetDistributedCenter();
   CFStringRef numstr = CFStringCreateWithFormat(NULL, nil, CFSTR("%d"), space);
   CFNotificationCenterPostNotification(nc, CFSTR("com.apple.switchSpaces"), numstr, NULL, TRUE);

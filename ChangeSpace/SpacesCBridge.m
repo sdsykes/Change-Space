@@ -28,4 +28,8 @@
   return is_full_screen();
 }
 
+- (int) total_spaces {
+  return total_spaces();
+}
+
 @end

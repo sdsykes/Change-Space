@@ -297,9 +297,31 @@
 #pragma mark -
 #pragma mark preferences delegate
 
+- (void)reportBadDesktopCount:(int)reportedSpaces
+{
+  NSAlert *warning = [[NSAlert alloc] init];
+  warning.messageText = @"Incorrect desktop count";
+  NSString *desktopsText;
+  if (reportedSpaces == 1) {
+    desktopsText = @"is only 1 desktop";
+  } else {
+    desktopsText = [NSString stringWithFormat:@"are only %d desktops", reportedSpaces];
+  }
+  NSString *infoText = [NSString stringWithFormat:@"The system is reporting that there %@. Please add %d more othewise Change Space will not function correctly.", desktopsText, totalSpaces - reportedSpaces];
+  warning.informativeText = infoText;
+  [warning runModal];
+  [warning release];  
+}
+
 - (void)windowWillClose:(NSNotification *)notification
 {
   if (totalSpaces > savedTotalSpaces) remapNeeded = YES;
+  
+  int reportedSpaces = [c_bridge total_spaces];
+  if (totalSpaces > reportedSpaces) {
+    [self reportBadDesktopCount:reportedSpaces];
+  }
+  
   [self setupNotification];
 }
 
@@ -522,7 +544,7 @@
     default: break;
   }
   
-  if (spaceNumber != current) {
+  if (spaceNumber != current && spaceNumber <= [c_bridge total_spaces]) {
     [self notify:direction fromSpace:current toSpace:spaceNumber];
 
     [self moveTo:spaceNumber];
