@@ -13,11 +13,6 @@
 
 #include "spaces.h"
 
-typedef int CGSConnection;
-extern OSStatus CGSGetWorkspace(const CGSConnection cid, int *workspace);
-extern OSStatus CGSSetWorkspace(const CGSConnection cid, int workspace);
-extern CGSConnection _CGSDefaultConnection(void);
-
 int get_space_id(void)
 {
   int space;

@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Sparkle/Sparkle.h>
-#import <ScriptingBridge/ScriptingBridge.h>
 #import "SRRecorderControl.h"
 #import "SpacesCBridge.h"
 #import "DDHotKeyCenter.h"

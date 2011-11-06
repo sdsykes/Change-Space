@@ -409,27 +409,56 @@
 #pragma mark -
 #pragma mark movement
 
-- (NSUInteger) fourCharCode:(char *)s
-{
-  return (s[0] << 24) + (s[1] << 16) + (s[2] << 8) + s[3];
-}
-
 - (NSString *) spaceKey:(NSUInteger)spaceNumber
 {
   NSString *str = [NSString stringWithFormat:@"space_%d", spaceNumber];
   return str;
 }
 
-- (void) moveTo:(NSUInteger)spaceNumber
+- (CGSTransitionOption) transitionDirectionForCSDirection:(CSDirection)direction
 {
-  if (spaceNumber == 1) {
-    id sb = [SBApplication applicationWithBundleIdentifier:@"com.apple.SystemEvents"];
-    // the cast to id is a hack to avoid the type warning, and the call to performSelector is a hack to
-    // avoid the semantic warning when calling keystroke:using: directly
-    [sb performSelector:@selector(keystroke:using:) withObject:@"1" withObject:(id)[self fourCharCode:"Kctl"]];
+  CGSTransitionOption transDir;
+  
+  switch (direction) {
+    case CSLeft:
+      transDir = CGSRight;
+      break;
+    case CSUp:
+      transDir = CGSDown;
+      break;
+    case CSRight:
+      transDir = CGSLeft;
+      break;
+    case CSDown:
+      transDir = CGSUp;
+      break;
+    case CSUpLeft:
+      transDir = CGSBottomRight;
+      break;
+    case CSUpRight:
+      transDir = CGSLeft;
+      break;
+    case CSDownLeft:
+      transDir = CGSRight;
+      break;
+    case CSDownRight:
+      transDir = CGSBottomLeft;
+      break;
+      
+    default:
+      transDir = CGSRight;
+      break;
+  }
+  return transDir;
+}
+
+- (void) moveTo:(NSUInteger)spaceNumber direction:(CSDirection)direction defaultMotion:(BOOL)defaultMotion
+{
+  unsigned int spaceIndex = (unsigned int)spaceNumber - 1;
+  if (defaultMotion) {
+    [c_bridge setSpaceWithoutTransition:spaceIndex];
   } else {
-    NSUInteger spaceIndex = spaceNumber - 1;
-    [c_bridge set_space_by_index:(unsigned int)spaceIndex];
+    [c_bridge setSpaceWithTransition:spaceIndex type:CGSSlide direction:[self transitionDirectionForCSDirection:direction]];
   }
 
   [statusItemView setTitle:[NSString stringWithFormat:@"%d", spaceNumber]];
@@ -442,7 +471,7 @@
   NSUInteger savedSpaceId = [c_bridge get_space_id];  
 
   for (int i = 2; i <= totalSpaces; i++) {
-    [self moveTo:i];
+    [c_bridge set_space_by_index:(unsigned int)(i - 1)];
     [NSThread sleepForTimeInterval:DESKTOP_MOVE_DELAY];
     NSUInteger currentSpaceId = [c_bridge get_space_id];
     [map setValue:[NSNumber numberWithInt:i] forKey:[self spaceKey:currentSpaceId]];
@@ -452,10 +481,10 @@
   if (!savedSpaceNumber) {
     [map setValue:[NSNumber numberWithInt:0] forKey:[self spaceKey:savedSpaceId]];
   } else {
-    [self moveTo:[savedSpaceNumber intValue]];
+    [c_bridge set_space_by_index:[savedSpaceNumber unsignedIntValue] - 1];
   }
   
-  [self setupNotification];  // makes sure timer is running even if prefs was not closed
+  [self setupNotification];  // makes sure we are subscribed even if prefs was not closed
 
   return map;
 }
@@ -546,8 +575,13 @@
   
   if (spaceNumber != current && spaceNumber <= [c_bridge total_spaces]) {
     [self notify:direction fromSpace:current toSpace:spaceNumber];
+    
+    BOOL isDefault;
+    if ((current - 1 == spaceNumber && direction == CSLeft) ||
+        (current + 1 == spaceNumber && direction == CSRight)) isDefault = YES;
+    else isDefault = NO;
 
-    [self moveTo:spaceNumber];
+    [self moveTo:spaceNumber direction:direction defaultMotion:isDefault];
     // this delay means it works you to press the arrows fast
     [NSThread sleepForTimeInterval:DESKTOP_MOVE_DELAY];
 
