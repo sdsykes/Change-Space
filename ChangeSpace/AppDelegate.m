@@ -21,6 +21,10 @@
 @synthesize window, transWindow;
 @synthesize c_bridge, statusItemView, blank_image, menu_images, pollingTimer, ddh;
 
+int const SPACEWIDTH = 70;
+int const SPACEHEIGHT = 40;
+int const SPACEPADDING = 9;
+
 #pragma mark defaults
 
 - (id) defaultsValues
@@ -59,6 +63,8 @@
   height = [[[gridRows selectedItem] title] intValue];
   totalSpaces = width * height;
   [desktopCount setStringValue:[NSString stringWithFormat:@"%d", totalSpaces]];
+
+  [self.transWindow calculateSize:(int)height numCols:(int)width spaceWidth:SPACEWIDTH spaceHeight:SPACEHEIGHT spacePadding:SPACEPADDING];
 }
 
 - (IBAction) updateGrid:(id) sender
@@ -288,7 +294,8 @@
 
   self.transWindow = [[[TransparentWindow alloc] init] autorelease];
   [transWindow setCollectionBehavior: NSWindowCollectionBehaviorCanJoinAllSpaces];
-  
+  [self.transWindow calculateSize:(int)height numCols:(int)width spaceWidth:SPACEWIDTH spaceHeight:SPACEHEIGHT spacePadding:SPACEPADDING];
+
   if (firstLaunch) [self activatePreferences:self];
   else [self setupNotification];
   
@@ -381,19 +388,24 @@
 
 - (void) notify:(CSDirection)direction fromSpace:(NSUInteger)fromSpace toSpace:(NSUInteger)toSpace
 {
-  NSRect screen = [[NSScreen mainScreen] frame];
-  NotificationView *notificationView = [[[NotificationView alloc] initWithFrame:CGRectMake(screen.size.width / 2, screen.size.height / 2, 50, 50)] autorelease];
+  [self.transWindow resetFrame];  // the screen size may have changed if using ext monitors etc
+  
+  NotificationView *notificationView = [[[NotificationView alloc] initWithFrame:self.transWindow.frame] autorelease];
+  notificationView.numRows = (int)height;
+  notificationView.numCols = (int)width;
+  notificationView.spaceWidth = SPACEWIDTH;
+  notificationView.spaceHeight = SPACEHEIGHT;
+  notificationView.spacePadding = SPACEPADDING;
+  notificationView.currentSpace = (int)toSpace;
+  notificationView.previousSpace = (int)fromSpace;
   notificationView.direction = direction;
   
-  [transWindow resetFrame];  // the screen size may have changed if using ext monitors etc
+  [self.transWindow setContentView:notificationView];
+  [self.transWindow display];  // make ready for display when the window is ordered front
   
-  [transWindow setContentView:notificationView];
-
-  [transWindow display];  // make ready for display when the window is ordered front
-
   [notificationView fade];
   
-  [transWindow orderFront:self];
+  [self.transWindow orderFront:self];
 }
 
 #pragma mark -

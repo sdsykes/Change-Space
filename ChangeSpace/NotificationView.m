@@ -11,6 +11,9 @@
 @implementation NotificationView
 
 @synthesize mTextAttributes, direction;
+@synthesize numRows, numCols, spaceWidth, spaceHeight, spacePadding, currentSpace, previousSpace;
+
+NSString *dirStr = @"⬅";
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -24,14 +27,15 @@
       // desktop name attributes 
       self.mTextAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
                           [NSColor whiteColor], NSForegroundColorAttributeName,
-                          [NSFont boldSystemFontOfSize: 148], NSFontAttributeName,
+                          [NSFont boldSystemFontOfSize: 58], NSFontAttributeName,
                           textShadow, NSShadowAttributeName,  
                               nil];
-      
+            
     }
     
     return self;
 }
+
 
 - (CGFloat)angleForDirection
 {
@@ -39,52 +43,143 @@
   
   switch(direction) {
     case CSLeft:
-      angle = 180;
-      break;
-    case CSRight:
       angle = 0;
       break;
-    case CSUp:
-      angle = 90;
+    case CSRight:
+      angle = 180;
       break;
-    case CSDown:
+    case CSUp:
       angle = -90;
       break;
+    case CSDown:
+      angle = 90;
+      break;
     case CSUpLeft:
-      angle = 135;
+      angle = -45;
       break;
     case CSUpRight:
-      angle = 45;
-      break;
-    case CSDownLeft:
       angle = -135;
       break;
+    case CSDownLeft:
+      angle = 45;
+      break;
     case CSDownRight:
-      angle = -45;
+      angle = 135;
       break;
   }
   return angle;
 }
 
+- (CGFloat)fontSizeForDirection
+{
+  CGFloat size = 0;
+  
+  switch(direction) {
+    case CSLeft:
+    case CSRight:
+      size = ARROW_SIZE_HOR;
+      break;
+    case CSUp:
+    case CSDown:
+      size = ARROW_SIZE_VER;
+      break;
+    case CSUpLeft:
+    case CSUpRight:
+    case CSDownLeft:
+    case CSDownRight:
+      size = ARROW_SIZE_DIAG;
+      break;
+  }
+  return size;
+}
+
+
 - (void)drawRect:(NSRect)dirtyRect
 {
-  NSString *dirStr = @"→";
+  [[NSGraphicsContext currentContext] saveGraphicsState];
+  NSRect bounds = [self bounds];
+  NSBezierPath* clipShape = [NSBezierPath bezierPath];
+  [clipShape appendBezierPathWithRoundedRect:bounds xRadius:8 yRadius:8];
+  [clipShape setWindingRule:NSEvenOddWindingRule];
   
-  NSSize	textSize = [dirStr sizeWithAttributes: mTextAttributes];
-  NSPoint	textPosition; 
-	textPosition.x = 0.5 * (dirtyRect.size.width - textSize.width);
-  textPosition.y = 0.5 * (dirtyRect.size.height - textSize.height);
+  // all of the clipped out spaces that will be mostly transparent
+  NSBezierPath* spacesPath = [NSBezierPath bezierPath];
   
+  // the path that should be highlighted white
+  NSBezierPath* highlightPath = nil;
+  
+  int prevXPos = 0, prevYPos = 0;
+  int k = 0;
+  for (k=0; k < numRows; k++) {
+    int i = 0;
+    for (i=0; i < numCols; i++) {
+      int spaceNumber = i + (k * numCols) + 1;
+      
+      NSBezierPath* oneGrid = [NSBezierPath bezierPath];
+      int xPos = (spacePadding * (i + 1)) + (spaceWidth * i);
+      int yPos = (spacePadding * (self.numRows - k))+(spaceHeight * (self.numRows - k - 1));
+      [oneGrid appendBezierPathWithRoundedRect:NSMakeRect(xPos, yPos, spaceWidth, spaceHeight) xRadius:2 yRadius:2];
+      
+      [spacesPath appendBezierPath:oneGrid];
+      
+      if (spaceNumber == self.currentSpace) {
+        highlightPath = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(xPos + 2, yPos + 2, spaceWidth - 4, spaceHeight - 4) xRadius:4 yRadius:4];
+      }
+      
+      if (spaceNumber == self.previousSpace) {
+        prevXPos = xPos;
+        prevYPos = yPos;
+      }
+    }
+  }
+  [clipShape appendBezierPath: spacesPath];
+  [clipShape addClip];
+  
+  
+  NSGradient* aGradient = [[[NSGradient alloc]
+                            initWithColorsAndLocations:[NSColor colorWithCalibratedRed:143/255.0 green:153/255.0 blue:155/255.0 alpha:1.0f], (CGFloat)0.0,
+                            [NSColor colorWithCalibratedRed:143/255.0 green:153/255.0 blue:155/255.0 alpha:1.0f], (CGFloat)2.0,
+                            [NSColor colorWithCalibratedRed:30/255.0 green:40/255.0 blue:39/255.0 alpha:1.0f], (CGFloat)0.55,
+                            [NSColor colorWithCalibratedRed:19/255.0 green:31/255.0 blue:29/255.0 alpha:1.0f], (CGFloat)0.58,
+                            [NSColor colorWithCalibratedRed:21/255.0 green:35/255.0 blue:46/255.0 alpha:1.0f], (CGFloat)1.0,
+                            nil] autorelease];
+  
+  
+  [aGradient drawInBezierPath:clipShape angle:-90.0];
+  
+  [clipShape setLineWidth:2];
+  [clipShape stroke];
+  [[NSGraphicsContext currentContext] restoreGraphicsState];
+  
+  [[[NSColor blackColor] colorWithAlphaComponent:0.35] setFill];
+  [spacesPath fill];
+  [[[NSColor blackColor] colorWithAlphaComponent:0.5] setStroke];
+  [spacesPath stroke];
+  
+  if (highlightPath != nil) {
+    [[[NSColor whiteColor] colorWithAlphaComponent:0.9] setFill];
+    [highlightPath fill];
+  }
+
+  // draw the arrow
+  [[NSGraphicsContext currentContext] saveGraphicsState];  
+  [mTextAttributes setValue:[NSFont boldSystemFontOfSize: [self fontSizeForDirection]] forKey:NSFontAttributeName];
+  textSize = [dirStr sizeWithAttributes: mTextAttributes];
+
+  NSPoint	textPosition;
+	textPosition.x = prevXPos + spaceWidth / 2 - textSize.width / 2;
+  textPosition.y = prevYPos + spaceHeight / 2 - textSize.height / 2;
+
   NSAffineTransform* transform = [NSAffineTransform transform];
-  NSSize originShift = NSMakeSize(self.bounds.origin.x + self.bounds.size.width /
-                                  2.0, self.bounds.origin.y + self.bounds.size.height / 2.0);
+  NSSize originShift = NSMakeSize(prevXPos + spaceWidth / 2,
+                                  prevYPos + spaceHeight / 2);
   [transform translateXBy: originShift.width yBy: originShift.height];
   [transform rotateByDegrees:[self angleForDirection]];
   [transform translateXBy: -originShift.width yBy: -originShift.height];
   [transform concat];
-
+  
   [dirStr drawAtPoint:textPosition withAttributes: mTextAttributes];
-
+  [[NSGraphicsContext currentContext] restoreGraphicsState];
 }
 
 - (void)fade

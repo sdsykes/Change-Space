@@ -8,8 +8,13 @@
 
 #import <AppKit/AppKit.h>
 
-@interface TransparentWindow : NSWindow
+@interface TransparentWindow : NSWindow {
+  NSSize frameSize;
+}
 
+@property (assign) NSSize frameSize;
+
+- (void)calculateSize: (int)numRows numCols:(int)numCols spaceWidth:(int)spaceWidth spaceHeight:(int)spaceHeight spacePadding:(int)spacePadding;
 - (void)resetFrame;
 
 @end
