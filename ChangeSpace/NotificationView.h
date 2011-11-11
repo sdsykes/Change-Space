@@ -18,7 +18,6 @@
 @interface NotificationView : NSView
 {
   NSMutableDictionary*	mTextAttributes;	//!< Attributes for desktop name text 
-	CSDirection direction;
   NSSize textSize;
   
   int numCols;
@@ -31,7 +30,6 @@
 }
 
 @property (nonatomic, retain) NSMutableDictionary*	mTextAttributes;
-@property (assign) CSDirection direction;
 
 @property (assign) int numCols;
 @property (assign) int numRows;

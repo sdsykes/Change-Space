@@ -10,7 +10,7 @@
 
 @implementation NotificationView
 
-@synthesize mTextAttributes, direction;
+@synthesize mTextAttributes;
 @synthesize numRows, numCols, spaceWidth, spaceHeight, spacePadding, currentSpace, previousSpace;
 
 NSString *dirStr = @"⬅";
@@ -36,59 +36,40 @@ NSString *dirStr = @"⬅";
     return self;
 }
 
+- (CGPoint)positionForSpaceNumber:(int)spaceNumber
+{
+  CGPoint point;
+  point.x = (spaceNumber - 1) % numCols;
+  point.y = (spaceNumber - 1) / numCols;
+
+  return point;
+}
 
 - (CGFloat)angleForDirection
 {
   CGFloat angle = 0;
+  CGPoint p1 = [self positionForSpaceNumber:previousSpace];
+  CGPoint p2 = [self positionForSpaceNumber:currentSpace];
+
+  CGFloat dx = p1.x - p2.x;
+  CGFloat dy = p2.y - p1.y;
+
+  angle = atan2(dy, dx) * 180 / M_PI;
   
-  switch(direction) {
-    case CSLeft:
-      angle = 0;
-      break;
-    case CSRight:
-      angle = 180;
-      break;
-    case CSUp:
-      angle = -90;
-      break;
-    case CSDown:
-      angle = 90;
-      break;
-    case CSUpLeft:
-      angle = -45;
-      break;
-    case CSUpRight:
-      angle = -135;
-      break;
-    case CSDownLeft:
-      angle = 45;
-      break;
-    case CSDownRight:
-      angle = 135;
-      break;
-  }
   return angle;
 }
 
 - (CGFloat)fontSizeForDirection
 {
   CGFloat size = 0;
+  CGFloat angle = [self angleForDirection];
   
-  switch(direction) {
-    case CSLeft:
-    case CSRight:
-      size = ARROW_SIZE_HOR;
-      break;
-    case CSUp:
-    case CSDown:
-      size = ARROW_SIZE_VER;
-      break;
-    case CSUpLeft:
-    case CSUpRight:
-    case CSDownLeft:
-    case CSDownRight:
-      size = ARROW_SIZE_DIAG;
-      break;
+  if (abs(angle) == 0 || abs(angle) == 180) {
+    size = ARROW_SIZE_HOR;
+  } else if (abs(angle) == 90) {
+    size = ARROW_SIZE_VER;
+  } else {
+    size = ARROW_SIZE_DIAG;
   }
   return size;
 }
@@ -186,7 +167,7 @@ NSString *dirStr = @"⬅";
 {
   [self setAlphaValue:1.0];
   
-  [[NSAnimationContext currentContext] setDuration:1.0];
+  [[NSAnimationContext currentContext] setDuration:0.4];
   [[self animator] setAlphaValue:0.0];  
 }
 
