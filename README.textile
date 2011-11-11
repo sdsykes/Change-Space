@@ -59,7 +59,8 @@ h2. Author
 Stephen Sykes
 Twitter: @sdsykes
 
-Thanks to LaC, see "stack overflow":http://stackoverflow.com/questions/6768684/osx-lion-applescript-how-to-get-current-space-from-mission-control/6967631#6967631 for the space id and part of the move space code.
+Special thanks to "Harry Groover":https://github.com/kutothe for the grid graphics code, and for supporting this project.
+Thanks to LaC, see "stack overflow":http://stackoverflow.com/questions/6768684/osx-lion-applescript-how-to-get-current-space-from-mission-control/6967631#6967631 for the original space id and part of the move space code.
 Thanks to Dachaz for the hi-res icons.
 
 h2. Donations
