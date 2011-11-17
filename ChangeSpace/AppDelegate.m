@@ -54,6 +54,12 @@ int const SPACEPADDING = 9;
   return [srw boolValue];
 }
 
+- (BOOL) correctDesktopMotion
+{
+  NSNumber *cdm = [[self defaultsValues] valueForKey:@"correctDesktopMotion"];
+  return [cdm boolValue];
+}
+
 #pragma mark -
 #pragma mark preferences
 
@@ -588,7 +594,8 @@ int const SPACEPADDING = 9;
     [self notify:direction fromSpace:current toSpace:spaceNumber];
     
     BOOL isDefault;
-    if ((current - 1 == spaceNumber && direction == CSLeft) ||
+    if (![self correctDesktopMotion] ||
+        (current - 1 == spaceNumber && direction == CSLeft) ||
         (current + 1 == spaceNumber && direction == CSRight)) isDefault = YES;
     else isDefault = NO;
 

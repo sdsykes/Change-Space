@@ -22,5 +22,7 @@
 	<integer>126</integer>
 	<key>upKeyFlags</key>
 	<integer>393216</integer>
+	<key>correctDesktopMotion</key>
+	<true/>
 </dict>
 </plist>
