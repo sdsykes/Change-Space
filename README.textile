@@ -12,29 +12,23 @@ These dynamic features are of little use to power users, who know where their ap
 
 h2. The solution
 
-To solve the problem, we must check a few settings, configure the correct number of desktops for a grid, and install this app which maps 4 directional hotkeys to move to the correct desktop as if there really were a grid.
+Change Space solves this problem.
 
-In Lion you can turn off the feature 'Automatically rearrange spaces based on the most recent use' in the Mission Control system preferences pane, and I recommend this. You must also make sure you have the right number of spaces (e.g. 9 for a 3x3 grid) by adding desktops using the left hand side + button when in Mission Control.
-
-With 9 desktops set up and fixed, you can then assign your applications to them by dragging them to the right desktop and right clicking on the icon in the task bar, and choosing Options->Assign to this desktop.
-
-Then the only problem remaining is how to navigate between the desktops as if they were in a grid, using the cursor keys.
-
-This app attempts to solve that problem.
-
-It is not entirely easy, because Mission Control is not scriptable. However, there is still a way to change between spaces, and to identify which space you are currently on.
+It allows you to navigate between the desktops as if they were in a grid, using the cursor keys and a control key combo.
 
 h2. Installation
 
-Download the app, and drag it into your Applications folder.
+"Download the latest version from here":https://github.com/sdsykes/Change-Space/downloads then double click to unzip, and drag it into your Applications folder.
 
 *BEFORE YOU LAUNCH THE APP* make sure you have the right number of desktops set up (eg 9 if you wish to have a 3x3 grid).
+
+In order to make sure you have the right number of spaces (e.g. 9 for a 3x3 grid), add desktops using the left hand side + button when in Mission Control.
+
+In Lion you can turn off the feature 'Automatically rearrange spaces based on the most recent use' in the Mission Control system preferences pane, and I recommend this heartily.
 
 When you first start the app, the preferences window will show. You should select the kind of grid you wish to have (eg 3x3)
 
 When the app is set up you can safely add it to your login items so it starts every time your mac does.
-
-"Download the latest version from here":https://github.com/sdsykes/Change-Space/downloads
 
 h2. Usage
 
@@ -44,7 +38,9 @@ Change Space has a preferences window, and here you should select the kind of gr
 
 The default keys to change spaces are ctrl-shift arrow keys. You can configure the keys that will be used in the preferences panel.
 
-*NOTE: DO NOT BE SURPRISED* when your machine starts to cycle through every desktop. This is normal, and it is because the app is working out the numeric identity of each of the desktops.  It only has to do this once.
+*NOTE: DO NOT BE SURPRISED* when your machine starts to cycle through every desktop. This is normal, and it is because the app is working out the numeric identity of each of the desktops.  It's quick, and it only has to do this once each time your mac is restarted.
+
+You can assign your applications permanently to a particular desktop by dragging them onto the right desktop, and then right clicking on the app icon in the task bar, and choosing Options->Assign to this desktop.
 
 h2. Known issues
 
@@ -52,7 +48,7 @@ Change Space cannot change to desktop 1 without sending ctrl-1 to the system. Un
 
 If you change the key mappings of Change Space to ctrl-arrows, please be sure to change the mappings for mission control (in System Preferences->Keyboard->Mission Control) so they do not use the same keys. You will likely get inconsistent behaviour when moving around the horizontal ends of your grid if they are the same.
 
-I have seen the mapping getting mixed up, and it cycling through the desktops on every space change. If this happens, try deleting ~/Library/Preferences/net.sdsykes.Change-Space.plist and restart the app. At any rate, please report issues like this in github issues.
+I have once seen the mapping getting mixed up, and it cycling through the desktops on every space change. If this happens, try deleting ~/Library/Preferences/net.sdsykes.Change-Space.plist and restart the app. At any rate, please report any issues like this in github issues.
 
 h2. Author
 

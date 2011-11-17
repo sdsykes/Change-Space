@@ -42,6 +42,13 @@
              <enclosure url="http://cloud.github.com/downloads/sdsykes/Change-Space/Change Space_2.1.0.app.zip" sparkle:version="2.1.0" length="563216" type="application/octet-stream" sparkle:dsaSignature="MCwCFDAMAqg5T4wcaSEMj7bbJplkB9qzAhQFczarxrlHD/Cla2aqMVJ0Oq6a2w==" />
           </item>
 
-
+          <item>
+              <title>Version 2.2.0 (Adds notification graphic, correct desktop motion)</title>
+              <sparkle:releaseNotesLink>
+               http://stephensykes.com/ChangeSpace/release_notes.html
+              </sparkle:releaseNotesLink>
+              <pubDate>Thu, 17 Nov 2011 22:36:00 +0200</pubDate>
+              <enclosure url="http://cloud.github.com/downloads/sdsykes/Change-Space/Change Space_2.2.0.app.zip" sparkle:version="2.2.0" length="566824" type="application/octet-stream" sparkle:dsaSignature="MCwCFAXou6dNf/U3k9kAdKy56s3C31BtAhQaEzFlX6jEz3ZoW5b5YrlnHB3KkQ==" />
+           </item>
    </channel>
 </rss>
