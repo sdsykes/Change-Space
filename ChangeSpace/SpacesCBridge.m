@@ -64,11 +64,11 @@
 
   // Do the usual transition
   [self setSpaceWithoutTransition:spaceIndex];
-  usleep(1000);
+  usleep(PRE_FREEZE_WAIT);
   CGSNewTransition(cid, &transitionSpec, &transitionHandle);
 
   // wait for it to happen
-  usleep(300000); 
+  usleep(LION_TRANSITION_DELAY); 
   // then do our own transition
   CGSInvokeTransition(cid, transitionHandle, 0.2);
 }

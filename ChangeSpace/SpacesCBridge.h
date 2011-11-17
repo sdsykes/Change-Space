@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <ScriptingBridge/ScriptingBridge.h>
 
+#define PRE_FREEZE_WAIT 1000
+#define LION_TRANSITION_DELAY 300000
 
 typedef int CGSConnection;
 /*
