@@ -18,6 +18,7 @@
 			<string>NSTextFieldCell</string>
 			<string>NSButton</string>
 			<string>NSButtonCell</string>
+			<string>NSBox</string>
 			<string>NSCustomObject</string>
 			<string>NSCustomView</string>
 			<string>NSView</string>
@@ -204,7 +205,7 @@
 					<int key="NSvFlags">256</int>
 					<string key="NSFrameSize">{170, 38}</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -718,7 +719,7 @@
 						<object class="NSTextField" id="204685878">
 							<reference key="NSNextResponder" ref="125547334"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 9}, {187, 17}}</string>
+							<string key="NSFrame">{{17, 9}, {124, 17}}</string>
 							<reference key="NSSuperview" ref="125547334"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="802418522"/>
@@ -808,6 +809,61 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 						</object>
+						<object class="NSButton" id="900065503">
+							<reference key="NSNextResponder" ref="125547334"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{5, 3}, {130, 32}}</string>
+							<reference key="NSSuperview" ref="125547334"/>
+							<reference key="NSWindow"/>
+							<string key="NSReuseIdentifierKey">_NS:687</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="899188746">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">134217728</int>
+								<string key="NSContents">Change Space</string>
+								<reference key="NSSupport" ref="761737124"/>
+								<string key="NSCellIdentifier">_NS:687</string>
+								<reference key="NSControlView" ref="900065503"/>
+								<int key="NSButtonFlags">-2046639873</int>
+								<int key="NSButtonFlags2">129</int>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+						</object>
+						<object class="NSBox" id="353687201">
+							<reference key="NSNextResponder" ref="125547334"/>
+							<int key="NSvFlags">12</int>
+							<string key="NSFrame">{{18, 12}, {69, 5}}</string>
+							<reference key="NSSuperview" ref="125547334"/>
+							<reference key="NSWindow"/>
+							<string key="NSReuseIdentifierKey">_NS:2411</string>
+							<string key="NSOffsets">{0, 0}</string>
+							<object class="NSTextFieldCell" key="NSTitleCell">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">0</int>
+								<string key="NSContents">Box</string>
+								<reference key="NSSupport" ref="761737124"/>
+								<object class="NSColor" key="NSBackgroundColor">
+									<int key="NSColorSpace">6</int>
+									<string key="NSCatalogName">System</string>
+									<string key="NSColorName">textBackgroundColor</string>
+									<object class="NSColor" key="NSColor">
+										<int key="NSColorSpace">3</int>
+										<bytes key="NSWhite">MQA</bytes>
+									</object>
+								</object>
+								<object class="NSColor" key="NSTextColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MCAwLjgwMDAwMDAxMTkAA</bytes>
+								</object>
+							</object>
+							<int key="NSBorderType">3</int>
+							<int key="NSBoxType">2</int>
+							<int key="NSTitlePosition">0</int>
+							<bool key="NSTransparent">NO</bool>
+						</object>
 					</array>
 					<string key="NSFrameSize">{493, 380}</string>
 					<reference key="NSSuperview"/>
@@ -815,7 +871,7 @@
 					<reference key="NSNextKeyView" ref="817885012"/>
 					<string key="NSReuseIdentifierKey">_NS:207</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -987,6 +1043,14 @@
 						<reference key="destination" ref="204685878"/>
 					</object>
 					<int key="connectionID">642</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">linkToProjectHome:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="899188746"/>
+					</object>
+					<int key="connectionID">665</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1304,6 +1368,8 @@
 							<reference ref="204685878"/>
 							<reference ref="750393175"/>
 							<reference ref="802418522"/>
+							<reference ref="900065503"/>
+							<reference ref="353687201"/>
 						</array>
 						<reference key="parent" ref="536909140"/>
 					</object>
@@ -1639,6 +1705,24 @@
 						<reference key="object" ref="524202693"/>
 						<reference key="parent" ref="750393175"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">663</int>
+						<reference key="object" ref="900065503"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="899188746"/>
+						</array>
+						<reference key="parent" ref="125547334"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">664</int>
+						<reference key="object" ref="899188746"/>
+						<reference key="parent" ref="900065503"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">666</int>
+						<reference key="object" ref="353687201"/>
+						<reference key="parent" ref="125547334"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1725,29 +1809,35 @@
 				<string key="646.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="649.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="650.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="663.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="664.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="666.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">653</int>
+			<int key="maxID">666</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">AppDelegate</string>
 					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">updateGrid:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">updateGrid:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="linkToProjectHome:">id</string>
+						<string key="updateGrid:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="linkToProjectHome:">
+							<string key="name">linkToProjectHome:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="updateGrid:">
 							<string key="name">updateGrid:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="circulateVertical">NSButton</string>
 						<string key="desktopCount">NSTextField</string>

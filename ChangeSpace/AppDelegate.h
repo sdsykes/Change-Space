@@ -77,5 +77,6 @@ typedef enum {
 @property (nonatomic, retain) TransparentWindow *transWindow;
 
 - (IBAction) updateGrid:(id) sender;
+- (IBAction) linkToProjectHome:(id)sender;
 
 @end

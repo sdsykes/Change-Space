@@ -63,6 +63,11 @@ int const SPACEPADDING = 9;
 #pragma mark -
 #pragma mark preferences
 
+- (IBAction) linkToProjectHome:(id)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"https://github.com/sdsykes/Change-Space"]];
+}
+
 - (void) updateLayout
 {
   width = [[[gridColumns selectedItem] title] intValue];
