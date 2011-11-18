@@ -1,4 +1,5 @@
 !>https://raw.github.com/sdsykes/Change-Space/master/ChangeSpace.png!
+
 h1. Change Space
 
 h4. Navigate OSX Lion desktops as if they were a 2D grid of spaces
