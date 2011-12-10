@@ -330,7 +330,7 @@
 		3A02BA2A145057E600993629 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = Switchstep;
 			};
 			buildConfigurationList = 3A02BA2D145057E600993629 /* Build configuration list for PBXProject "Change Space" */;
