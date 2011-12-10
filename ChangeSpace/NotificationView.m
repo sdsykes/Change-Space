@@ -166,8 +166,9 @@ NSString *dirStr = @"⬅";
 - (void)fade
 {
   [self setAlphaValue:1.0];
-  
-  [[NSAnimationContext currentContext] setDuration:0.4];
+  NSAnimationContext *animContext = [NSAnimationContext currentContext];
+  [animContext setDuration:0.5];
+  [animContext setCompletionHandler:^{[[self window] orderOut:self];}];
   [[self animator] setAlphaValue:0.0];  
 }
 
