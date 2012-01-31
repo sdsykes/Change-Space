@@ -539,7 +539,7 @@ int const SPACEPADDING = 9;
 - (void) go:(CSDirection)keyDirection
 {
   NSUInteger current = [self currentSpace];
-  NSUInteger spaceNumber = current;
+  NSInteger spaceNumber = current;
   CSDirection direction = keyDirection;
   
   if (!spaceNumber) return;
