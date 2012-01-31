@@ -49,6 +49,16 @@
               </sparkle:releaseNotesLink>
               <pubDate>Thu, 17 Nov 2011 22:36:00 +0200</pubDate>
               <enclosure url="http://cloud.github.com/downloads/sdsykes/Change-Space/Change Space_2.2.0.app.zip" sparkle:version="2.2.0" length="566824" type="application/octet-stream" sparkle:dsaSignature="MCwCFAXou6dNf/U3k9kAdKy56s3C31BtAhQaEzFlX6jEz3ZoW5b5YrlnHB3KkQ==" />
-           </item>
+          </item>
+           
+          <item>
+               <title>Version 2.2.1 (Fixes circulate vertical)</title>
+               <sparkle:releaseNotesLink>
+                http://stephensykes.com/ChangeSpace/release_notes.html
+               </sparkle:releaseNotesLink>
+               <pubDate>Tue, 31 Jan 2012 23:34:00 +0200</pubDate>
+               <enclosure url="http://cloud.github.com/downloads/sdsykes/Change-Space/Change Space_2.2.1.app.zip" sparkle:version="2.2.1" length="593757" type="application/octet-stream" sparkle:dsaSignature="MCwCFCwQj8j+28RR+1oChtqPZXd2/STQAhQbulzV1AQn6ciOB6ncmCeyMMqSAg==" />
+          </item>
+           
    </channel>
 </rss>
