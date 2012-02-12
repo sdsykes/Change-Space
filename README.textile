@@ -4,6 +4,12 @@ h1. Change Space
 
 h4. Navigate OSX Lion desktops as if they were a 2D grid of spaces
 
+h2. Note
+
+This code is no longer maintained, my re-written replacement app is here: ReSpaceApp:http://switchstep.com/ReSpaceApp
+
+ReSpaceApp is on all fronts a better approach and solution, but Change Space app may continue to work for you.
+
 h2. The problem
 
 In OSX Lion Apple dispensed with the simple and effective 2D spaces grids many people loved and relied on.
